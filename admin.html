@@ -1,0 +1,3375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Administration Console | Dexton Solvexx</title>
+    
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <style>
+        /* Isolate Admin Portal Styling */
+        body.admin-body {
+            background-color: #0b0f19 !important;
+            color: #f3f4f6 !important;
+            font-family: 'Inter', sans-serif !important;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- LOGIN SCREEN --- */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, #0d2826 0%, #0b0f19 60%, #020617 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1.5rem;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .login-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 440px;
+            padding: 3rem 2.5rem;
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .login-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .login-subtitle {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin-bottom: 2.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #d1d5db;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            color: #ffffff;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: rgba(31, 41, 55, 0.8);
+            border-color: var(--color-accent, #0091ff);
+            box-shadow: 0 0 10px rgba(0, 145, 255, 0.2);
+        }
+
+        .login-error {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1.25rem;
+            display: none;
+            text-align: left;
+        }
+
+        /* --- DASHBOARD WRAPPER --- */
+        .admin-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .admin-sidebar {
+            width: 280px;
+            background-color: #111827;
+            border-right: 1px solid #1f2937;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            flex-shrink: 0;
+            z-index: 999;
+            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .sidebar-brand .logo-icon {
+            width: 36px;
+            height: 36px;
+        }
+
+        .sidebar-brand .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-grow: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            padding: 0.875rem 1rem;
+            border-radius: 8px;
+            color: #9ca3af;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .menu-item svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            transition: stroke 0.3s ease;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            color: #ffffff;
+            background-color: rgba(0, 145, 255, 0.15);
+        }
+
+        .menu-item.active {
+            color: var(--color-accent, #0091ff);
+            border-left: 3px solid var(--color-accent, #0091ff);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .sidebar-user {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .btn-logout {
+            color: #9ca3af;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            color: #ef4444;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .admin-main {
+            flex-grow: 1;
+            padding: 2.5rem;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        /* Mobile Header */
+        .mobile-admin-header {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background-color: #111827;
+            border-bottom: 1px solid #1f2937;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .sidebar-toggle {
+            cursor: pointer;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+            position: relative;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Content Header */
+        .admin-content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 1.5rem;
+        }
+
+        .content-title {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .content-subtitle {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-top: 0.25rem;
+        }
+
+        /* --- STATS GRID --- */
+        .stats-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card-admin {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background-color: rgba(0, 145, 255, 0.1);
+            color: var(--color-accent, #0091ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .stat-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-val {
+            font-size: 1.625rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .stat-title {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 0.25rem;
+        }
+
+        /* --- DASHBOARD SECTIONS --- */
+        .panel-section {
+            display: none;
+        }
+
+        .panel-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        /* --- SHINY CHARTS --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .dashboard-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1.75rem;
+        }
+
+        .card-header-admin {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 260px;
+            position: relative;
+        }
+
+        /* Lead List Widget */
+        .quick-leads-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quick-lead-item {
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #1f2937;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quick-lead-left {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .quick-lead-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .quick-lead-meta {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .quick-lead-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            background-color: rgba(0, 145, 255, 0.15);
+            color: var(--color-accent, #0091ff);
+        }
+
+        /* --- DESIGN CONFIGURATION PANEL --- */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-section-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .radio-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .radio-tile-wrapper {
+            position: relative;
+        }
+
+        .radio-tile-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .radio-tile-box {
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #9ca3af;
+            background-color: rgba(31, 41, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .radio-tile-input:checked + .radio-tile-box {
+            border-color: var(--color-accent, #0091ff);
+            color: #ffffff;
+            background-color: rgba(0, 145, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 145, 255, 0.15);
+        }
+
+        /* Hex Pickers */
+        .color-picker-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .color-picker-wrapper {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 6px;
+            border: 1px solid #1f2937;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .color-picker-input {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 54px;
+            height: 54px;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .save-bar-admin {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* --- BLOG MANAGER --- */
+        .blog-split {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+        }
+
+        .blog-list-wrapper {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .blog-admin-item {
+            padding: 1rem;
+            background-color: #1f2937;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-admin-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .blog-admin-meta {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .btn-delete-admin {
+            color: #ef4444;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-delete-admin:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* --- LEADS MANAGER --- */
+        .leads-table-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1.75rem;
+        }
+
+        .table-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-control {
+            max-width: 320px;
+        }
+
+        .leads-table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .admin-table th {
+            padding: 1rem;
+            font-weight: 700;
+            color: #9ca3af;
+            border-bottom: 2px solid #1f2937;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #1f2937;
+            color: #d1d5db;
+        }
+
+        .admin-table tbody tr:hover {
+            background-color: rgba(255,255,255,0.02);
+        }
+
+        .lead-detail-main {
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .lead-detail-sub {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 0.15rem;
+        }
+
+        /* Notification Toast */
+        .toast-notify {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: #10b981;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast-notify.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .item-admin-card {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .item-admin-content {
+            flex-grow: 1;
+        }
+
+        .item-admin-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-admin-subtitle {
+            font-size: 0.8rem;
+            color: var(--color-accent, #0091ff);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-admin-desc {
+            font-size: 0.825rem;
+            color: #9ca3af;
+            line-height: 1.45;
+        }
+
+        .item-admin-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .btn-action-admin {
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.3s ease;
+        }
+
+        .btn-action-admin:hover {
+            color: #ffffff;
+        }
+
+        .btn-action-admin.delete:hover {
+            color: #ef4444;
+        }
+
+        /* --- RESPONSIVE OVERRIDES --- */
+        @media (max-width: 1200px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .admin-sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                height: 100vh;
+                width: 280px;
+                transform: translateX(0);
+                transition: transform 0.3s ease;
+            }
+
+            .admin-sidebar.active {
+                transform: translateX(280px);
+            }
+
+            .mobile-admin-header {
+                display: flex;
+            }
+
+            .admin-main {
+                padding: 1.5rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Prevent auto-zooming on focus in iOS mobile browsers */
+            input, select, textarea, .form-control {
+                font-size: 16px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .blog-split {
+                grid-template-columns: 1fr;
+            }
+
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-control {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="admin-body">
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notify">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toast-message">Changes saved successfully!</span>
+    </div>
+
+    <!-- Main Workspace -->
+    <div id="admin-workspace" class="admin-wrapper">
+        
+        <!-- Sidebar Navigation -->
+        <aside id="admin-sidebar" class="admin-sidebar">
+            <div class="sidebar-brand">
+                <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dexton Solvexx Logo">
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="var(--color-accent)" />
+                <stop offset="100%" stop-color="var(--color-primary)" />
+              </linearGradient>
+              <linearGradient id="logoGradGold" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#E5E7EB" />
+                <stop offset="50%" stop-color="#FFFFFF" />
+                <stop offset="100%" stop-color="#9CA3AF" />
+              </linearGradient>
+              <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <!-- 3D Bevel Arrowhead Symbol -->
+            <!-- Left Wing (D) -->
+            <path d="M 27 15 L 77 32 L 43 35 L 27 54 L 38 35 Z" fill="url(#logoGrad)" filter="url(#logoGlow)" />
+            <path d="M 27 15 L 43 35 L 27 54 L 33 50 L 45 35 L 33 19 Z" fill="url(#logoGradGold)" />
+            
+            <!-- Right Wing (S Ribbon) -->
+            <path d="M 43 35 L 77 32 L 62 45 L 48 40 Z" fill="url(#logoGradGold)" />
+            <path d="M 48 40 L 62 45 L 52 49 L 40 44 Z" fill="url(#logoGrad)" /></svg>
+                <div class="brand-title">Dexton <span>Solvexx</span></div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <div class="menu-item active" data-target="panel-dashboard">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </div>
+                <div class="menu-item" data-target="panel-design">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22z"></path>
+                        <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+                    </svg>
+                    Design & Branding
+                </div>
+                <div class="menu-item" data-target="panel-pages-menu">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                    </svg>
+                    Pages & Menu Builder
+                </div>
+                <div class="menu-item" data-target="panel-pages-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Page Content Manager
+                </div>
+                <div class="menu-item" data-target="panel-hero-stats">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                    Hero & Stats
+                </div>
+                <div class="menu-item" data-target="panel-testimonials">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Testimonials
+                </div>
+                <div class="menu-item" data-target="panel-faqs">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    FAQs
+                </div>
+                <div class="menu-item" data-target="panel-blog">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    Blog Manager
+                </div>
+                <div class="menu-item" data-target="panel-leads">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Sourced Leads
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-info">
+                    <span class="user-name">Administrator</span>
+                    <span class="user-role">Super Admin</span>
+                </div>
+                <div id="btn-logout" class="btn-logout" title="Exit to Website">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+        <!-- Right Side Main Content -->
+        <div class="admin-main">
+            
+            <!-- Mobile Admin Header -->
+            <div class="mobile-admin-header">
+                <div id="sidebar-toggle" class="sidebar-toggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </div>
+                <div style="font-weight: 800; font-size: 1rem;">Dexton Admin Console</div>
+                <div style="width: 24px;"></div>
+            </div>
+
+            <!-- Panel 1: Dashboard -->
+            <div id="panel-dashboard" class="panel-section active">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Executive Dashboard</h2>
+                        <p class="content-subtitle">Real-time stats and pipeline activity indicators.</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <div id="live-time" style="font-size: 0.9rem; font-weight: 700; color: #ffffff;">Singapore, 2026-06-19 23:45</div>
+                        <div style="font-size: 0.75rem; color: var(--color-accent, #0091ff); font-weight: 700; text-transform: uppercase; margin-top: 0.25rem;">Live Connection Active</div>
+                    </div>
+                </div>
+
+                <div class="stats-grid-admin">
+                    <div class="stat-card-admin">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        </div>
+                        <div class="stat-details">
+                            <span id="dash-leads-count" class="stat-val">0</span>
+                            <span class="stat-title">Sourced Leads</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                        </div>
+                        <div class="stat-details">
+                            <span id="dash-blog-count" class="stat-val">3</span>
+                            <span class="stat-title">Published Blogs</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-val">98%</span>
+                            <span class="stat-title">Placement Rate</span>
+                        </div>
+                    </div>
+                    <div class="stat-card-admin">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
+                        <div class="stat-details">
+                            <span class="stat-val">$428K</span>
+                            <span class="stat-title">Saved Operational Overhead</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header-admin">
+                            <span>Sourcing Leads Trend (Monthly)</span>
+                            <span style="font-size: 0.8rem; color: var(--color-accent, #0091ff);">Year-To-Date</span>
+                        </div>
+                        <div class="chart-container">
+                            <svg viewBox="0 0 500 220" width="100%" height="100%" style="overflow: visible;">
+                                <defs>
+                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="var(--color-accent, #0091ff)" stop-opacity="0.4" />
+                                        <stop offset="100%" stop-color="var(--color-accent, #0091ff)" stop-opacity="0.0" />
+                                    </linearGradient>
+                                </defs>
+                                <g>
+                                    <line x1="0" y1="200" x2="480" y2="200" stroke="#1f2937" stroke-width="1" />
+                                    <line x1="0" y1="150" x2="480" y2="150" stroke="#1f2937" stroke-dasharray="4" />
+                                    <line x1="0" y1="100" x2="480" y2="100" stroke="#1f2937" stroke-dasharray="4" />
+                                    <line x1="0" y1="50" x2="480" y2="50" stroke="#1f2937" stroke-dasharray="4" />
+                                </g>
+                                <text x="-25" y="205" fill="#9ca3af" font-size="10">0</text>
+                                <text x="-25" y="155" fill="#9ca3af" font-size="10">10</text>
+                                <text x="-25" y="105" fill="#9ca3af" font-size="10">20</text>
+                                <text x="-25" y="55" fill="#9ca3af" font-size="10">30</text>
+                                
+                                <path d="M 20 180 Q 100 130 180 150 T 340 70 T 460 30 L 460 200 L 20 200 Z" fill="url(#chartGrad)"></path>
+                                <path d="M 20 180 Q 100 130 180 150 T 340 70 T 460 30" fill="none" stroke="var(--color-accent, #0091ff)" stroke-width="3"></path>
+                                
+                                <circle cx="20" cy="180" r="5" fill="#ffffff" stroke="var(--color-primary, #1e40af)" stroke-width="2"></circle>
+                                <circle cx="110" cy="142" r="5" fill="#ffffff" stroke="var(--color-primary, #1e40af)" stroke-width="2"></circle>
+                                <circle cx="200" cy="148" r="5" fill="#ffffff" stroke="var(--color-primary, #1e40af)" stroke-width="2"></circle>
+                                <circle cx="290" cy="95" r="5" fill="#ffffff" stroke="var(--color-primary, #1e40af)" stroke-width="2"></circle>
+                                <circle cx="380" cy="52" r="5" fill="#ffffff" stroke="var(--color-primary, #1e40af)" stroke-width="2"></circle>
+                                <circle cx="460" cy="30" r="5" fill="#ffffff" stroke="var(--color-primary, #1e40af)" stroke-width="2"></circle>
+
+                                <text x="12" y="220" fill="#9ca3af" font-size="10">Jan</text>
+                                <text x="102" y="220" fill="#9ca3af" font-size="10">Feb</text>
+                                <text x="192" y="220" fill="#9ca3af" font-size="10">Mar</text>
+                                <text x="282" y="220" fill="#9ca3af" font-size="10">Apr</text>
+                                <text x="372" y="220" fill="#9ca3af" font-size="10">May</text>
+                                <text x="450" y="220" fill="#9ca3af" font-size="10">Jun</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header-admin">Recent Leads</div>
+                        <div id="dash-recent-leads" class="quick-leads-list">
+                            <div style="color: #9ca3af; text-align: center; padding: 2rem;">No recent leads found.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 2: Design Settings -->
+            <div id="panel-design" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Design & Branding Configurator</h2>
+                        <p class="content-subtitle">Customize color themes, background styles, and global text variables.</p>
+                    </div>
+                </div>
+
+                <form id="design-form">
+                    <div class="settings-grid">
+                        
+                        <!-- Content Configurations -->
+                        <div class="form-section-card">
+                            <h3 class="form-section-title">Global Text & Contact Variables</h3>
+                            <div class="form-group">
+                                <label class="form-label" for="config-companyName">Company Brand Name</label>
+                                <input type="text" id="config-companyName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-tagline">Corporate Tagline</label>
+                                <input type="text" id="config-tagline" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-telephone">Telephone Lines (One per line)</label>
+                                <textarea id="config-telephone" class="form-control" rows="2" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-email">Business Emails (One per line)</label>
+                                <textarea id="config-email" class="form-control" rows="2" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-address">Headquarters Address</label>
+                                <textarea id="config-address" class="form-control" rows="3" required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Logo Customizer -->
+                        <div class="form-section-card">
+                            <h3 class="form-section-title">Logo & Brand Wordmark Customizer</h3>
+                            <div class="form-group">
+                                <label class="form-label" for="config-logoTextFirst">Logo Text - Main Part</label>
+                                <input type="text" id="config-logoTextFirst" class="form-control" placeholder="DEXTON">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-logoTextSecond">Logo Text - Highlight Part</label>
+                                <input type="text" id="config-logoTextSecond" class="form-control" placeholder="SOLVEXX">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-logoTagline">Brand Tagline</label>
+                                <input type="text" id="config-logoTagline" class="form-control" placeholder="Connecting Global Talent. Delivering Workforce Excellence.">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="config-logoImageUrl">Custom Logo Image URL</label>
+                                <input type="text" id="config-logoImageUrl" class="form-control" placeholder="https://example.com/logo.png (Overrides SVG shape)">
+                                <p style="font-size: 0.75rem; color: #9ca3af; margin-top: 0.35rem;">Enter a URL or path to a custom logo image. Leave blank to use the vector logo below.</p>
+                            </div>
+                            
+                            <!-- Logo Vector Shape Selector -->
+                            <div style="margin-top: 1.5rem;">
+                                <label class="form-label">Vector Logo Emblem Shape</label>
+                                <div class="radio-tiles">
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="logoShape" value="arrowhead" class="radio-tile-input" checked>
+                                        <div class="radio-tile-box">Arrowhead</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="logoShape" value="chevron" class="radio-tile-input">
+                                        <div class="radio-tile-box">Chevron</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="logoShape" value="hexagon" class="radio-tile-input">
+                                        <div class="radio-tile-box">Hexagon</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="logoShape" value="nodes" class="radio-tile-input">
+                                        <div class="radio-tile-box">Nodes Net</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Logo Colors Color Pickers -->
+                            <div style="margin-top: 1.5rem;">
+                                <label class="form-label">Vector Emblem Colors</label>
+                                <div class="color-picker-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Grad Start</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-logo-grad-start" class="color-picker-input" value="#0091FF">
+                                            </div>
+                                            <input type="text" id="hex-logo-grad-start" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#0091FF">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Grad End</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-logo-grad-end" class="color-picker-input" value="#1E40AF">
+                                            </div>
+                                            <input type="text" id="hex-logo-grad-end" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#1E40AF">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Bevel Start</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-logo-bevel-start" class="color-picker-input" value="#FFFFFF">
+                                            </div>
+                                            <input type="text" id="hex-logo-bevel-start" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#FFFFFF">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Bevel End</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-logo-bevel-end" class="color-picker-input" value="#9CA3AF">
+                                            </div>
+                                            <input type="text" id="hex-logo-bevel-end" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#9CA3AF">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content Colors Configurator -->
+                        <div class="form-section-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <h3 class="form-section-title">Content & Card Colors Customizer</h3>
+                            <p style="font-size: 0.85rem; color: #9ca3af;">Customize background and text colors of card grids and content sections globally.</p>
+                            <div class="color-picker-group" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <div>
+                                    <label class="form-label" style="font-size: 0.75rem;">Card Background</label>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="picker-custom-card-bg" class="color-picker-input" value="#FFFFFF">
+                                        </div>
+                                        <input type="text" id="hex-custom-card-bg" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#FFFFFF">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label" style="font-size: 0.75rem;">Body Text</label>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="picker-custom-body-text" class="color-picker-input" value="#1F2937">
+                                        </div>
+                                        <input type="text" id="hex-custom-body-text" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#1F2937">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label" style="font-size: 0.75rem;">Secondary Text</label>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="picker-custom-sec-text" class="color-picker-input" value="#4B5563">
+                                        </div>
+                                        <input type="text" id="hex-custom-sec-text" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#4B5563">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="form-label" style="font-size: 0.75rem;">Border Color</label>
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <div class="color-picker-wrapper">
+                                            <input type="color" id="picker-custom-border" class="color-picker-input" value="#E5E7EB">
+                                        </div>
+                                        <input type="text" id="hex-custom-border" class="form-control" style="width: 85px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#E5E7EB">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Style Configurations -->
+                        <div class="form-section-card" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div>
+                                <h3 class="form-section-title" style="margin-bottom: 1rem;">Core Style Theme Mode</h3>
+                                <div class="radio-tiles">
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="themeMode" value="light" class="radio-tile-input" checked>
+                                        <div class="radio-tile-box">Light Color Theme</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="themeMode" value="dark" class="radio-tile-input">
+                                        <div class="radio-tile-box">Dark Color Theme</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="form-label">Brand Color Accent Palette</label>
+                                <div class="radio-tiles">
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="colorPalette" value="teal" class="radio-tile-input">
+                                        <div class="radio-tile-box">Teal</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="colorPalette" value="blue" class="radio-tile-input" checked>
+                                        <div class="radio-tile-box">Blue</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="colorPalette" value="purple" class="radio-tile-input">
+                                        <div class="radio-tile-box">Purple</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="colorPalette" value="gold" class="radio-tile-input">
+                                        <div class="radio-tile-box">Gold</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="colorPalette" value="red" class="radio-tile-input">
+                                        <div class="radio-tile-box">Red</div>
+                                    </div>
+                                    <div class="radio-tile-wrapper">
+                                        <input type="radio" name="colorPalette" value="custom" class="radio-tile-input">
+                                        <div class="radio-tile-box">Custom</div>
+                                    </div>
+                                </div>
+
+                                <!-- Custom Color Hex Pickers -->
+                                <div id="custom-color-pickers" class="color-picker-group" style="display: none;">
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Primary Hex</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-primary" class="color-picker-input" value="#1E40AF">
+                                            </div>
+                                            <input type="text" id="hex-primary" class="form-control" style="width: 90px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#1E40AF">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Accent Hex</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-accent" class="color-picker-input" value="#0091FF">
+                                            </div>
+                                            <input type="text" id="hex-accent" class="form-control" style="width: 90px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#0091FF">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dark BG Preset -->
+                            <div id="dark-bg-settings" style="display: none;">
+                                <label class="form-label" for="dark-bg-type">Dark Background Style</label>
+                                <select id="dark-bg-type" class="form-control" style="background-color: rgba(31, 41, 55, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff;">
+                                    <option value="default">Default Grey-Dark (#111827)</option>
+                                    <option value="midnight">Midnight Navy (#0F172A)</option>
+                                    <option value="black">Pitch Black (#000000)</option>
+                                    <option value="custom">Custom Color Picker</option>
+                                </select>
+                                <div id="custom-dark-bg-picker" class="color-picker-group" style="display: none; margin-top: 1rem;">
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Custom Background Hex</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-dark-bg" class="color-picker-input" value="#111827">
+                                            </div>
+                                            <input type="text" id="hex-dark-bg" class="form-control" style="width: 90px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#111827">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Light BG Preset -->
+                            <div id="light-bg-settings">
+                                <label class="form-label" for="light-bg-type">Light Background Style</label>
+                                <select id="light-bg-type" class="form-control" style="background-color: rgba(31, 41, 55, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff;">
+                                    <option value="default">Default Cream (#FAF9F6)</option>
+                                    <option value="cream">Soft Cream (#FAF5EC)</option>
+                                    <option value="alabaster">Warm Alabaster (#FDFBF7)</option>
+                                    <option value="white">Pure White (#FFFFFF)</option>
+                                    <option value="custom">Custom Color Picker</option>
+                                </select>
+                                <div id="custom-light-bg-picker" class="color-picker-group" style="display: none; margin-top: 1rem;">
+                                    <div>
+                                        <label class="form-label" style="font-size: 0.75rem;">Custom Background Hex</label>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <div class="color-picker-wrapper">
+                                                <input type="color" id="picker-light-bg" class="color-picker-input" value="#FFFFFF">
+                                            </div>
+                                            <input type="text" id="hex-light-bg" class="form-control" style="width: 90px; padding: 0.4rem 0.6rem; font-size: 0.85rem;" value="#FFFFFF">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="save-bar-admin">
+                        <button type="button" id="btn-reset-defaults" class="btn btn-secondary" style="border-radius: 6px; padding: 0.75rem 1.5rem;">Reset Defaults</button>
+                        <button type="submit" class="btn btn-primary" style="border-radius: 6px; padding: 0.75rem 1.5rem;">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Panel: Pages & Menu Builder -->
+            <div id="panel-pages-menu" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Pages & Menu Builder</h2>
+                        <p class="content-subtitle">Manage menu links, services dropdowns, and toggle homepage sections visibility.</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Homepage Sections Toggle -->
+                    <div class="form-section-card">
+                        <h3 class="form-section-title">Homepage Section Visibility</h3>
+                        <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 1.5rem;">Toggle visibility of homepage sections. Switched-off sections will be hidden sitewide.</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 1rem;" id="sections-toggle-container">
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Hero Banner Section</span>
+                                <input type="checkbox" id="section-toggle-hero" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Statistics Counters</span>
+                                <input type="checkbox" id="section-toggle-stats" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Services Highlight Grid</span>
+                                <input type="checkbox" id="section-toggle-services" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Industries Overview</span>
+                                <input type="checkbox" id="section-toggle-industries" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Timeline / Journey</span>
+                                <input type="checkbox" id="section-toggle-timeline" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Testimonials Block</span>
+                                <input type="checkbox" id="section-toggle-testimonials" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>FAQ Accordions Block</span>
+                                <input type="checkbox" id="section-toggle-faqs" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Recent Blog Posts</span>
+                                <input type="checkbox" id="section-toggle-blog" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                            <label class="form-label" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500;">
+                                <span>Contact Form & Map</span>
+                                <input type="checkbox" id="section-toggle-contact" checked style="width: 18px; height: 18px; cursor: pointer;">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Services Dropdown List Manager -->
+                    <div class="form-section-card" style="display: flex; flex-direction: column;">
+                        <h3 class="form-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Services Menu Links</span>
+                            <button type="button" id="btn-add-service" class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 4px;">+ Add Service Link</button>
+                        </h3>
+                        <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 1.5rem;">Add, edit or remove links within the Services dropdown navigation menu.</p>
+                        
+                        <div id="services-list-container" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 400px; overflow-y: auto; padding-right: 0.5rem;">
+                            <!-- Dynamic list items will be injected here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Pages Manager -->
+                <div class="form-section-card" style="margin-top: 2rem;">
+                    <h3 class="form-section-title">Main Navigation Page Visibility</h3>
+                    <p style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 1.5rem;">Toggle visibility of top-level website pages in header/footer navigation.</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;" id="pages-visibility-container">
+                        <!-- Dynamic page toggles will be injected here -->
+                    </div>
+                </div>
+
+                <div class="save-bar-admin">
+                    <button type="button" id="btn-pages-reset-defaults" class="btn btn-secondary" style="border-radius: 6px; padding: 0.75rem 1.5rem;">Reset Default Pages</button>
+                    <button type="button" id="btn-save-pages-menu" class="btn btn-primary" style="border-radius: 6px; padding: 0.75rem 1.5rem;">Save Menu Changes</button>
+                </div>
+            </div>
+
+            <!-- Panel: Hero & Stats Editor -->
+            <div id="panel-hero-stats" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Homepage Hero & Statistics Editor</h2>
+                        <p class="content-subtitle">Customize the hero title, subtitle, call-to-actions, and stats metrics displayed on the landing page.</p>
+                    </div>
+                </div>
+
+                <form id="hero-stats-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <!-- Left: Hero Configuration -->
+                        <div class="form-section-card">
+                            <h3 class="form-section-title">Hero Copy Settings</h3>
+                            <div class="form-group">
+                                <label class="form-label" for="hero-title-input">Hero Title (HTML Allowed)</label>
+                                <textarea id="hero-title-input" class="form-control" rows="3" style="resize: vertical; font-family: monospace; font-size: 0.85rem;" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="hero-subtitle-input">Hero Subtitle</label>
+                                <textarea id="hero-subtitle-input" class="form-control" rows="4" style="resize: vertical;" required></textarea>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="hero-cta1-text">CTA 1 Button Text</label>
+                                    <input type="text" id="hero-cta1-text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="hero-cta1-link">CTA 1 Button Link</label>
+                                    <input type="text" id="hero-cta1-link" class="form-control" required>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="hero-cta2-text">CTA 2 Button Text</label>
+                                    <input type="text" id="hero-cta2-text" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="hero-cta2-link">CTA 2 Button Link</label>
+                                    <input type="text" id="hero-cta2-link" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Stats Configuration -->
+                        <div class="form-section-card">
+                            <h3 class="form-section-title">Homepage Statistics</h3>
+                            <!-- Stat 1 -->
+                            <div style="display: grid; grid-template-columns: 80px 60px 1fr; gap: 0.75rem; align-items: flex-end; margin-bottom: 1rem;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Stat 1 Target</label>
+                                    <input type="text" id="stat1-target" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Suffix</label>
+                                    <input type="text" id="stat1-suffix" class="form-control" style="padding: 0.5rem 0.75rem;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Label Name</label>
+                                    <input type="text" id="stat1-label" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                            </div>
+                            <!-- Stat 2 -->
+                            <div style="display: grid; grid-template-columns: 80px 60px 1fr; gap: 0.75rem; align-items: flex-end; margin-bottom: 1rem;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Stat 2 Target</label>
+                                    <input type="text" id="stat2-target" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Suffix</label>
+                                    <input type="text" id="stat2-suffix" class="form-control" style="padding: 0.5rem 0.75rem;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Label Name</label>
+                                    <input type="text" id="stat2-label" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                            </div>
+                            <!-- Stat 3 -->
+                            <div style="display: grid; grid-template-columns: 80px 60px 1fr; gap: 0.75rem; align-items: flex-end; margin-bottom: 1rem;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Stat 3 Target</label>
+                                    <input type="text" id="stat3-target" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Suffix</label>
+                                    <input type="text" id="stat3-suffix" class="form-control" style="padding: 0.5rem 0.75rem;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Label Name</label>
+                                    <input type="text" id="stat3-label" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                            </div>
+                            <!-- Stat 4 -->
+                            <div style="display: grid; grid-template-columns: 80px 60px 1fr; gap: 0.75rem; align-items: flex-end; margin-bottom: 1rem;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Stat 4 Target</label>
+                                    <input type="text" id="stat4-target" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Suffix</label>
+                                    <input type="text" id="stat4-suffix" class="form-control" style="padding: 0.5rem 0.75rem;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="form-label" style="font-size: 0.7rem;">Label Name</label>
+                                    <input type="text" id="stat4-label" class="form-control" style="padding: 0.5rem 0.75rem;" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="save-bar-admin" style="margin-top: 2rem;">
+                        <button type="submit" class="btn btn-primary" style="border-radius: 6px; padding: 0.75rem 1.5rem;">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Panel: Testimonials Manager -->
+            <div id="panel-testimonials" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Client Testimonials Manager</h2>
+                        <p class="content-subtitle">Manage, publish, and edit client feedback testimonials shown on the homepage.</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem;">
+                    <!-- Left: Add/Edit Testimonial -->
+                    <div class="form-section-card">
+                        <h3 id="testimonial-form-title" class="form-section-title">Add New Testimonial</h3>
+                        <form id="testimonial-form">
+                            <input type="hidden" id="testimonial-edit-index" value="-1">
+                            <div class="form-group">
+                                <label class="form-label" for="testimonial-name">Client Name</label>
+                                <input type="text" id="testimonial-name" class="form-control" required placeholder="e.g. Marcus Sterling">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="testimonial-role">Role / Company</label>
+                                <input type="text" id="testimonial-role" class="form-control" required placeholder="e.g. CTO, Enterprise Cloud Systems">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="testimonial-feedback">Feedback Quote</label>
+                                <textarea id="testimonial-feedback" class="form-control" rows="5" required placeholder="Paste client feedback quote here..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="testimonial-initials">Initials (Optional)</label>
+                                <input type="text" id="testimonial-initials" class="form-control" style="width: 80px;" placeholder="e.g. MS">
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" id="testimonial-submit-btn" class="btn btn-primary" style="border-radius: 6px; padding: 0.75rem 1.5rem; flex-grow: 1;">Publish Testimonial</button>
+                                <button type="button" id="testimonial-cancel-btn" class="btn btn-secondary" style="border-radius: 6px; padding: 0.75rem 1.5rem; display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right: Testimonial List -->
+                    <div class="form-section-card">
+                        <h3 class="form-section-title">Active Testimonials List</h3>
+                        <div id="admin-testimonial-list" style="max-height: 500px; overflow-y: auto; padding-right: 0.5rem;">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: FAQs Manager -->
+            <div id="panel-faqs" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Accordion FAQs Manager</h2>
+                        <p class="content-subtitle">Manage, publish, and edit custom Accordion FAQ items shown on the homepage.</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem;">
+                    <!-- Left: Add/Edit FAQ -->
+                    <div class="form-section-card">
+                        <h3 id="faq-form-title" class="form-section-title">Add New FAQ</h3>
+                        <form id="faq-form">
+                            <input type="hidden" id="faq-edit-index" value="-1">
+                            <div class="form-group">
+                                <label class="form-label" for="faq-question-input">FAQ Question</label>
+                                <input type="text" id="faq-question-input" class="form-control" required placeholder="e.g. What onboarding periods are required?">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="faq-answer-input">FAQ Answer</label>
+                                <textarea id="faq-answer-input" class="form-control" rows="6" required placeholder="Enter answer details..."></textarea>
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" id="faq-submit-btn" class="btn btn-primary" style="border-radius: 6px; padding: 0.75rem 1.5rem; flex-grow: 1;">Publish FAQ</button>
+                                <button type="button" id="faq-cancel-btn" class="btn btn-secondary" style="border-radius: 6px; padding: 0.75rem 1.5rem; display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right: FAQ List -->
+                    <div class="form-section-card">
+                        <h3 class="form-section-title">Active FAQs List</h3>
+                        <div id="admin-faq-list" style="max-height: 500px; overflow-y: auto; padding-right: 0.5rem;">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 3: Blog Manager -->
+            <div id="panel-blog" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Custom Blog Manager</h2>
+                        <p class="content-subtitle">Publish dynamic insights and management journals directly to the insights grid.</p>
+                    </div>
+                </div>
+
+                <div class="blog-split">
+                    <!-- Form to create a blog -->
+                    <div class="form-section-card">
+                        <h3 class="form-section-title">Create Blog Article</h3>
+                        <form id="blog-form">
+                            <div class="form-group">
+                                <label class="form-label" for="blog-title">Article Title</label>
+                                <input type="text" id="blog-title" class="form-control" required placeholder="e.g. Scaling Remote Engineering Teams">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="blog-category">Category Tag</label>
+                                <input type="text" id="blog-category" class="form-control" required placeholder="e.g. Sourcing / Strategy / Tech">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="blog-summary">Short Executive Summary</label>
+                                <textarea id="blog-summary" class="form-control" rows="3" required placeholder="Provide a brief summary of the article contents..."></textarea>
+                            </div>
+                            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div>
+                                    <label class="form-label" for="blog-readtime">Est. Read Time</label>
+                                    <input type="text" id="blog-readtime" class="form-control" required placeholder="e.g. 5 Min Read">
+                                </div>
+                                <div>
+                                    <label class="form-label" for="blog-date">Publish Date</label>
+                                    <input type="text" id="blog-date" class="form-control" required placeholder="e.g. Jun 19, 2026">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 6px; margin-top: 1rem;">Publish Article &rarr;</button>
+                        </form>
+                    </div>
+
+                    <!-- List of dynamic blogs -->
+                    <div class="blog-list-wrapper">
+                        <h3 class="form-section-title" style="margin-bottom: 0.5rem;">Currently Sourced Articles</h3>
+                        <div id="admin-blog-list" style="display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; max-height: 480px;">
+                            <!-- Sourced items appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 4: Leads Manager -->
+            <div id="panel-leads" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Contact Lead Inbox</h2>
+                        <p class="content-subtitle">Review business consultation inquiries and staffing pipeline requests.</p>
+                    </div>
+                </div>
+
+                <div class="leads-table-card">
+                    <div class="table-controls">
+                        <input type="text" id="lead-search" class="form-control search-control" placeholder="Search by name, company, or email...">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button type="button" id="btn-export-csv" class="btn btn-secondary" style="border-radius: 6px; padding: 0.6rem 1.2rem; font-size: 0.9rem;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px; display: inline; vertical-align: middle;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Export CSV
+                            </button>
+                            <button type="button" id="btn-clear-leads" class="btn btn-secondary" style="border-radius: 6px; padding: 0.6rem 1.2rem; font-size: 0.9rem; border-color: rgba(239, 68, 68, 0.4); color: #ef4444;">
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="leads-table-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Consultant Details</th>
+                                    <th>Enterprise Details</th>
+                                    <th>Service Mandate</th>
+                                    <th>Message Details</th>
+                                    <th style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-table-body">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 3rem; color: #9ca3af;">No inquiries available in local mailbox database.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel: Page Content Manager -->
+            <div id="panel-pages-content" class="panel-section">
+                <div class="admin-content-header">
+                    <div>
+                        <h2 class="content-title">Sitewide Page Content Manager</h2>
+                        <p class="content-subtitle">Manage, edit, add, or remove headers and body paragraphs across all subpages of the website.</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Left: Page Selection & Hero Settings -->
+                    <div class="form-section-card">
+                        <h3 class="form-section-title">Select Page & Hero Header</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="page-select">Select Page to Edit</label>
+                            <select id="page-select" class="form-control" style="background-color: rgba(31, 41, 55, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 0.75rem;">
+                                <option value="about.html">About Us (about.html)</option>
+                                <option value="services.html">Services Overview (services.html)</option>
+                                <option value="industries.html">Industries (industries.html)</option>
+                                <option value="contact.html">Contact Us (contact.html)</option>
+                                <option value="talent-acquisition.html">Talent Acquisition (talent-acquisition.html)</option>
+                                <option value="executive-search.html">Executive Search (executive-search.html)</option>
+                                <option value="rpo-services.html">RPO Services (rpo-services.html)</option>
+                                <option value="permanent-staffing.html">Permanent Staffing (permanent-staffing.html)</option>
+                                <option value="contract-staffing.html">Contract Staffing (contract-staffing.html)</option>
+                                <option value="global-hiring.html">Global Hiring (global-hiring.html)</option>
+                                <option value="offshore-recruitment.html">Offshore Recruitment (offshore-recruitment.html)</option>
+                                <option value="workforce-planning.html">Workforce Planning (workforce-planning.html)</option>
+                                <option value="blog.html">Blog List (blog.html)</option>
+                                <option value="privacy-policy.html">Privacy Policy (privacy-policy.html)</option>
+                                <option value="terms-and-conditions.html">Terms & Conditions (terms-and-conditions.html)</option>
+                                <option value="disclaimer.html">Disclaimer (disclaimer.html)</option>
+                                <option value="sitemap.html">Sitemap (sitemap.html)</option>
+                                <option value="index.html">Homepage (index.html)</option>
+                            </select>
+                        </div>
+                        
+                        <div style="border-top: 1px solid rgba(255, 255, 255, 0.05); margin: 1.5rem 0; padding-top: 1rem;">
+                            <h4 style="font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 1rem;">Page Hero Section Config</h4>
+                            <div class="form-group">
+                                <label class="form-label" for="page-hero-tag">Hero Tag / Category</label>
+                                <input type="text" id="page-hero-tag" class="form-control" placeholder="e.g. Corporate Profile">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="page-hero-title">Hero Main Title (HTML Allowed)</label>
+                                <input type="text" id="page-hero-title" class="form-control" placeholder="e.g. Strategic Talent Advisors">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="page-hero-subtitle">Hero Subtitle</label>
+                                <textarea id="page-hero-subtitle" class="form-control" rows="3" placeholder="e.g. We connect top talent with industry leaders..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <button type="button" id="btn-save-page-content" class="btn btn-primary" style="width: 100%; border-radius: 6px; padding: 0.75rem;">Save Page Changes</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Dynamic Content Blocks -->
+                    <div class="form-section-card" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <h3 class="form-section-title" style="margin: 0;">Main Content Blocks</h3>
+                            <button type="button" id="btn-add-content-block" class="btn btn-secondary" style="border-radius: 6px; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: var(--color-accent, #0091ff);">+ Add Block</button>
+                        </div>
+                        <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 1rem;">These blocks will replace the default text sections of the selected subpage main content area. Reorder or modify headers and paragraphs.</p>
+                        
+                        <div id="page-blocks-list" style="display: flex; flex-direction: column; gap: 1.5rem; max-height: 480px; overflow-y: auto; padding-right: 0.5rem;">
+                            <!-- Blocks will be dynamically generated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripting Core Controls -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // State variables
+            let leadsList = [];
+            let blogList = [];
+
+            // UI Elements mapping
+            const btnLogout = document.getElementById('btn-logout');
+
+            // Sidebar and navigation toggle
+            const sidebar = document.getElementById('admin-sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const menuItems = document.querySelectorAll('.menu-item');
+            const panels = document.querySelectorAll('.panel-section');
+
+            // Form inputs
+            const designForm = document.getElementById('design-form');
+            const blogForm = document.getElementById('blog-form');
+            const leadSearchInput = document.getElementById('lead-search');
+
+            // Initialize connection time
+            setInterval(() => {
+                const now = new Date();
+                const pad = (n) => n.toString().padStart(2, '0');
+                document.getElementById('live-time').textContent = `Singapore, ${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+            }, 1000);
+
+            /* --- EXIT CONTROLLER --- */
+            if (btnLogout) {
+                btnLogout.addEventListener('click', () => {
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Sidebar Mobile Toggle
+            if (sidebarToggle && sidebar && sidebarOverlay) {
+                const toggleSidebar = () => {
+                    sidebar.classList.toggle('active');
+                    sidebarOverlay.classList.toggle('active');
+                };
+                sidebarToggle.addEventListener('click', toggleSidebar);
+                sidebarOverlay.addEventListener('click', toggleSidebar);
+            }
+
+            // Tab Panels switcher
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Update menu active class
+                    menuItems.forEach(mi => mi.classList.remove('active'));
+                    item.classList.add('active');
+
+                    // Switch panel
+                    const targetPanel = item.getAttribute('data-target');
+                    panels.forEach(panel => {
+                        if (panel.id === targetPanel) {
+                            panel.classList.add('active');
+                        } else {
+                            panel.classList.remove('active');
+                        }
+                    });
+
+                    // Close sidebar on mobile after selection
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('active');
+                        sidebarOverlay.classList.remove('active');
+                    }
+                });
+            });
+
+            /* --- INITIALIZATION & DATA LOADING --- */
+            const initializeDashboard = () => {
+                loadConfigData();
+                loadBlogData();
+                loadLeadData();
+                loadHeroStatsData();
+                loadTestimonialData();
+                loadFaqData();
+                loadPagesMenuData();
+                bindThemeModeChangeEvents();
+                bindCMSChangeEvents();
+                bindCMSBuilderEvents();
+            };
+
+            // 1. Load Configurations
+            const loadConfigData = () => {
+                const config = JSON.parse(localStorage.getItem('dexton_config') || '{}');
+                document.getElementById('config-companyName').value = config.companyName || 'Dexton Solvexx';
+                document.getElementById('config-tagline').value = config.tagline || '';
+                document.getElementById('config-telephone').value = config.telephone || '';
+                document.getElementById('config-email').value = config.email || '';
+                document.getElementById('config-address').value = config.address || '';
+
+                // Active Theme Mode
+                const themeMode = localStorage.getItem('dexton_theme_mode') || 'light';
+                document.querySelector(`input[name="themeMode"][value="${themeMode}"]`).checked = true;
+                toggleThemeSettingsDisplay(themeMode);
+
+                // Palette
+                const palette = localStorage.getItem('dexton_color_theme') || 'blue';
+                const paletteInput = document.querySelector(`input[name="colorPalette"][value="${palette}"]`);
+                if (paletteInput) paletteInput.checked = true;
+                toggleCustomColorPickersDisplay(palette);
+
+                // Custom palette hex
+                const customPrimary = localStorage.getItem('dexton_custom_primary') || '#1E40AF';
+                const customAccent = localStorage.getItem('dexton_custom_accent') || '#0091FF';
+                document.getElementById('picker-primary').value = customPrimary;
+                document.getElementById('hex-primary').value = customPrimary;
+                document.getElementById('picker-accent').value = customAccent;
+                document.getElementById('hex-accent').value = customAccent;
+
+                // Dark background selectors
+                const darkBgType = localStorage.getItem('dexton_bg_type') || 'default';
+                document.getElementById('dark-bg-type').value = darkBgType;
+                toggleCustomDarkBgDisplay(darkBgType);
+
+                const customDarkBg = localStorage.getItem('dexton_custom_bg') || '#111827';
+                document.getElementById('picker-dark-bg').value = customDarkBg;
+                document.getElementById('hex-dark-bg').value = customDarkBg;
+
+                // Light background selectors
+                const lightBgType = localStorage.getItem('dexton_light_bg_type') || 'default';
+                document.getElementById('light-bg-type').value = lightBgType;
+                toggleCustomLightBgDisplay(lightBgType);
+
+                const customLightBg = localStorage.getItem('dexton_custom_light_bg') || '#FFFFFF';
+                document.getElementById('picker-light-bg').value = customLightBg;
+                document.getElementById('hex-light-bg').value = customLightBg;
+
+                // Load Logo Config
+                const logoShape = localStorage.getItem('dexton_logo_shape') || 'arrowhead';
+                const shapeInput = document.querySelector(`input[name="logoShape"][value="${logoShape}"]`);
+                if (shapeInput) shapeInput.checked = true;
+                
+                const gradStart = localStorage.getItem('dexton_logo_grad_start') || '#0091FF';
+                const gradEnd = localStorage.getItem('dexton_logo_grad_end') || '#1E40AF';
+                const bevelStart = localStorage.getItem('dexton_logo_bevel_start') || '#FFFFFF';
+                const bevelEnd = localStorage.getItem('dexton_logo_bevel_end') || '#9CA3AF';
+                
+                document.getElementById('picker-logo-grad-start').value = gradStart;
+                document.getElementById('hex-logo-grad-start').value = gradStart;
+                document.getElementById('picker-logo-grad-end').value = gradEnd;
+                document.getElementById('hex-logo-grad-end').value = gradEnd;
+                document.getElementById('picker-logo-bevel-start').value = bevelStart;
+                document.getElementById('hex-logo-bevel-start').value = bevelStart;
+                document.getElementById('picker-logo-bevel-end').value = bevelEnd;
+                document.getElementById('hex-logo-bevel-end').value = bevelEnd;
+
+                // Load Logo text and image overrides
+                document.getElementById('config-logoTextFirst').value = localStorage.getItem('dexton_logo_text_first') || 'DEXTON';
+                document.getElementById('config-logoTextSecond').value = localStorage.getItem('dexton_logo_text_second') || 'SOLVEXX';
+                document.getElementById('config-logoTagline').value = localStorage.getItem('dexton_logo_tagline') || 'Connecting Global Talent. Delivering Workforce Excellence.';
+                document.getElementById('config-logoImageUrl').value = localStorage.getItem('dexton_logo_image_url') || '';
+                
+                // Load Content Colors
+                const cardBg = localStorage.getItem('dexton_custom_card_bg') || '#FFFFFF';
+                const bodyText = localStorage.getItem('dexton_custom_body_text') || '#1F2937';
+                const secText = localStorage.getItem('dexton_custom_sec_text') || '#4B5563';
+                const borderCol = localStorage.getItem('dexton_custom_border') || '#E5E7EB';
+                
+                document.getElementById('picker-custom-card-bg').value = cardBg;
+                document.getElementById('hex-custom-card-bg').value = cardBg;
+                document.getElementById('picker-custom-body-text').value = bodyText;
+                document.getElementById('hex-custom-body-text').value = bodyText;
+                document.getElementById('picker-custom-sec-text').value = secText;
+                document.getElementById('hex-custom-sec-text').value = secText;
+                document.getElementById('picker-custom-border').value = borderCol;
+                document.getElementById('hex-custom-border').value = borderCol;
+            };
+
+            // 2. Load Blog Articles
+            const loadBlogData = () => {
+                blogList = JSON.parse(localStorage.getItem('dexton_custom_blogs') || '[]');
+                document.getElementById('dash-blog-count').textContent = blogList.length + 3; // +3 for static ones
+                
+                const listContainer = document.getElementById('admin-blog-list');
+                listContainer.innerHTML = '';
+
+                if (blogList.length === 0) {
+                    listContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem; border: 1px dashed #1f2937; border-radius: 8px;">No custom articles published. Only static system articles exist.</div>';
+                    return;
+                }
+
+                blogList.forEach((blog, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'blog-admin-item';
+                    el.innerHTML = `
+                        <div>
+                            <div class="blog-admin-title">${escapeHtml(blog.title)}</div>
+                            <div class="blog-admin-meta">${escapeHtml(blog.category)} &bull; ${escapeHtml(blog.date)} &bull; ${escapeHtml(blog.readtime)}</div>
+                        </div>
+                        <div class="btn-delete-admin" data-index="${index}" title="Delete Article">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </div>
+                    `;
+                    listContainer.appendChild(el);
+                });
+
+                // Attach delete triggers
+                listContainer.querySelectorAll('.btn-delete-admin').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = btn.getAttribute('data-index');
+                        if (confirm('Are you sure you want to delete this custom blog article? This action is permanent.')) {
+                            blogList.splice(idx, 1);
+                            localStorage.setItem('dexton_custom_blogs', JSON.stringify(blogList));
+                            loadBlogData();
+                            showToast('Blog article deleted successfully!');
+                        }
+                    });
+                });
+            };
+
+            // 3. Load Leads Mailbox
+            const loadLeadData = () => {
+                leadsList = JSON.parse(localStorage.getItem('dexton_leads') || '[]');
+                document.getElementById('dash-leads-count').textContent = leadsList.length;
+
+                // Sync recent leads lists on overview panel
+                const dashRecentContainer = document.getElementById('dash-recent-leads');
+                dashRecentContainer.innerHTML = '';
+                
+                const tableBody = document.getElementById('leads-table-body');
+                tableBody.innerHTML = '';
+
+                if (leadsList.length === 0) {
+                    dashRecentContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem;">No recent inquiries available.</div>';
+                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 3rem; color: #9ca3af;">No inquiries available in local mailbox database.</td></tr>';
+                    return;
+                }
+
+                // Sort leads by date descending (assuming id is timestamp)
+                const sortedLeads = [...leadsList].sort((a,b) => b.id - a.id);
+
+                // Populate recent leads widget (show max 3)
+                sortedLeads.slice(0, 3).forEach(lead => {
+                    const el = document.createElement('div');
+                    el.className = 'quick-lead-item';
+                    el.innerHTML = `
+                        <div class="quick-lead-left">
+                            <span class="quick-lead-name">${escapeHtml(lead.name)}</span>
+                            <span class="quick-lead-meta">${escapeHtml(lead.company || 'Private Practice')} &bull; ${escapeHtml(lead.email)}</span>
+                        </div>
+                        <span class="quick-lead-badge">${escapeHtml(lead.service || 'Consultation')}</span>
+                    `;
+                    dashRecentContainer.appendChild(el);
+                });
+
+                // Populate leads table
+                renderLeadsTable(sortedLeads);
+            };
+
+            const renderLeadsTable = (leads) => {
+                const tableBody = document.getElementById('leads-table-body');
+                tableBody.innerHTML = '';
+
+                if (leads.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2.5rem; color: #9ca3af;">No matching inquiries found.</td></tr>';
+                    return;
+                }
+
+                leads.forEach(lead => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-size: 0.8rem; white-space: nowrap;">${escapeHtml(lead.date || 'N/A')}</td>
+                        <td>
+                            <div class="lead-detail-main">${escapeHtml(lead.name)}</div>
+                            <div class="lead-detail-sub">${escapeHtml(lead.email)}</div>
+                            <div class="lead-detail-sub">${escapeHtml(lead.phone || 'No phone')}</div>
+                        </td>
+                        <td>
+                            <div class="lead-detail-main" style="font-weight: 500;">${escapeHtml(lead.company || 'N/A')}</div>
+                        </td>
+                        <td>
+                            <span style="font-size: 0.8rem; padding: 0.25rem 0.5rem; border-radius: 4px; background-color: rgba(0, 145, 255, 0.1); color: var(--color-accent, #0091ff); font-weight: 700; display: inline-block;">
+                                ${escapeHtml(lead.service || 'Corporate Sourcing')}
+                            </span>
+                        </td>
+                        <td style="font-size: 0.85rem; max-width: 300px; line-height: 1.45;">${escapeHtml(lead.message || '')}</td>
+                        <td>
+                            <div class="btn-delete-admin" data-id="${lead.id}" title="Delete Lead Info">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+
+                // Attach delete listeners
+                tableBody.querySelectorAll('.btn-delete-admin').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = parseInt(btn.getAttribute('data-id'));
+                        if (confirm('Delete this lead registration detail?')) {
+                            const newLeads = leadsList.filter(l => l.id !== id);
+                            localStorage.setItem('dexton_leads', JSON.stringify(newLeads));
+                            loadLeadData();
+                            showToast('Lead entry removed.');
+                        }
+                    });
+                });
+            };
+
+            /* --- DESIGN CONFIGURATIONS LOGIC --- */
+            const bindThemeModeChangeEvents = () => {
+                // Radio themeMode logic display toggling
+                document.querySelectorAll('input[name="themeMode"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        toggleThemeSettingsDisplay(e.target.value);
+                    });
+                });
+
+                // Radio palette logic color picker displaying
+                document.querySelectorAll('input[name="colorPalette"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        toggleCustomColorPickersDisplay(e.target.value);
+                    });
+                });
+
+                // Custom colors synchronization pickers & texts
+                syncColorInputs('picker-primary', 'hex-primary');
+                syncColorInputs('picker-accent', 'hex-accent');
+
+                // Dark background selectors toggling
+                const darkBgTypeSelect = document.getElementById('dark-bg-type');
+                darkBgTypeSelect.addEventListener('change', (e) => {
+                    toggleCustomDarkBgDisplay(e.target.value);
+                });
+                syncColorInputs('picker-dark-bg', 'hex-dark-bg');
+
+                // Light background selectors toggling
+                const lightBgTypeSelect = document.getElementById('light-bg-type');
+                lightBgTypeSelect.addEventListener('change', (e) => {
+                    toggleCustomLightBgDisplay(e.target.value);
+                });
+                syncColorInputs('picker-light-bg', 'hex-light-bg');
+
+                // Sync new logo/content color pickers & texts
+                syncColorInputs('picker-logo-grad-start', 'hex-logo-grad-start');
+                syncColorInputs('picker-logo-grad-end', 'hex-logo-grad-end');
+                syncColorInputs('picker-logo-bevel-start', 'hex-logo-bevel-start');
+                syncColorInputs('picker-logo-bevel-end', 'hex-logo-bevel-end');
+                syncColorInputs('picker-custom-card-bg', 'hex-custom-card-bg');
+                syncColorInputs('picker-custom-body-text', 'hex-custom-body-text');
+                syncColorInputs('picker-custom-sec-text', 'hex-custom-sec-text');
+                syncColorInputs('picker-custom-border', 'hex-custom-border');
+            };
+
+            const toggleThemeSettingsDisplay = (mode) => {
+                if (mode === 'dark') {
+                    document.getElementById('dark-bg-settings').style.display = 'block';
+                    document.getElementById('light-bg-settings').style.display = 'none';
+                } else {
+                    document.getElementById('dark-bg-settings').style.display = 'none';
+                    document.getElementById('light-bg-settings').style.display = 'block';
+                }
+            };
+
+            const toggleCustomColorPickersDisplay = (palette) => {
+                const pickerGroup = document.getElementById('custom-color-pickers');
+                if (palette === 'custom') {
+                    pickerGroup.style.display = 'flex';
+                } else {
+                    pickerGroup.style.display = 'none';
+                }
+            };
+
+            const toggleCustomDarkBgDisplay = (type) => {
+                const picker = document.getElementById('custom-dark-bg-picker');
+                if (type === 'custom') {
+                    picker.style.display = 'flex';
+                } else {
+                    picker.style.display = 'none';
+                }
+            };
+
+            const toggleCustomLightBgDisplay = (type) => {
+                const picker = document.getElementById('custom-light-bg-picker');
+                if (type === 'custom') {
+                    picker.style.display = 'flex';
+                } else {
+                    picker.style.display = 'none';
+                }
+            };
+
+            const syncColorInputs = (pickerId, textId) => {
+                const picker = document.getElementById(pickerId);
+                const text = document.getElementById(textId);
+                if (picker && text) {
+                    picker.addEventListener('input', () => {
+                        text.value = picker.value.toUpperCase();
+                    });
+                    text.addEventListener('change', () => {
+                        let val = text.value.trim();
+                        if (/^#[0-9A-F]{6}$/i.test(val)) {
+                            picker.value = val;
+                        } else {
+                            text.value = picker.value.toUpperCase();
+                        }
+                    });
+                }
+            };
+
+            // Save Design configurations
+            designForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Save texts variables
+                const newConfig = {
+                    companyName: document.getElementById('config-companyName').value.trim(),
+                    tagline: document.getElementById('config-tagline').value.trim(),
+                    telephone: document.getElementById('config-telephone').value.trim(),
+                    email: document.getElementById('config-email').value.trim(),
+                    address: document.getElementById('config-address').value.trim()
+                };
+                localStorage.setItem('dexton_config', JSON.stringify(newConfig));
+
+                // Save styles variables
+                const themeMode = document.querySelector('input[name="themeMode"]:checked').value;
+                localStorage.setItem('dexton_theme_mode', themeMode);
+
+                const palette = document.querySelector('input[name="colorPalette"]:checked').value;
+                localStorage.setItem('dexton_color_theme', palette);
+
+                if (palette === 'custom') {
+                    localStorage.setItem('dexton_custom_primary', document.getElementById('hex-primary').value.trim().toUpperCase());
+                    localStorage.setItem('dexton_custom_accent', document.getElementById('hex-accent').value.trim().toUpperCase());
+                }
+
+                // Dark mode config overrides
+                if (themeMode === 'dark') {
+                    const darkBgType = document.getElementById('dark-bg-type').value;
+                    localStorage.setItem('dexton_bg_type', darkBgType);
+                    if (darkBgType === 'custom') {
+                        localStorage.setItem('dexton_custom_bg', document.getElementById('hex-dark-bg').value.trim().toUpperCase());
+                    }
+                } else {
+                    // Light mode config overrides
+                    const lightBgType = document.getElementById('light-bg-type').value;
+                    localStorage.setItem('dexton_light_bg_type', lightBgType);
+                    if (lightBgType === 'custom') {
+                        localStorage.setItem('dexton_custom_light_bg', document.getElementById('hex-light-bg').value.trim().toUpperCase());
+                    }
+                }
+
+                // Save logo configurator keys
+                const logoShape = document.querySelector('input[name="logoShape"]:checked').value;
+                localStorage.setItem('dexton_logo_shape', logoShape);
+                localStorage.setItem('dexton_logo_grad_start', document.getElementById('hex-logo-grad-start').value.trim().toUpperCase());
+                localStorage.setItem('dexton_logo_grad_end', document.getElementById('hex-logo-grad-end').value.trim().toUpperCase());
+                localStorage.setItem('dexton_logo_bevel_start', document.getElementById('hex-logo-bevel-start').value.trim().toUpperCase());
+                localStorage.setItem('dexton_logo_bevel_end', document.getElementById('hex-logo-bevel-end').value.trim().toUpperCase());
+                
+                // Save logo text and image overrides
+                localStorage.setItem('dexton_logo_text_first', document.getElementById('config-logoTextFirst').value.trim());
+                localStorage.setItem('dexton_logo_text_second', document.getElementById('config-logoTextSecond').value.trim());
+                localStorage.setItem('dexton_logo_tagline', document.getElementById('config-logoTagline').value.trim());
+                localStorage.setItem('dexton_logo_image_url', document.getElementById('config-logoImageUrl').value.trim());
+
+                // Save content colors keys
+                localStorage.setItem('dexton_custom_card_bg', document.getElementById('hex-custom-card-bg').value.trim().toUpperCase());
+                localStorage.setItem('dexton_custom_body_text', document.getElementById('hex-custom-body-text').value.trim().toUpperCase());
+                localStorage.setItem('dexton_custom_sec_text', document.getElementById('hex-custom-sec-text').value.trim().toUpperCase());
+                localStorage.setItem('dexton_custom_border', document.getElementById('hex-custom-border').value.trim().toUpperCase());
+
+                showToast('Configurations saved! Dynamic values will propagate instantly.');
+            });
+
+            // Reset config back to defaults
+            document.getElementById('btn-reset-defaults').addEventListener('click', () => {
+                if (confirm('Reset all design, branding, color properties, and CMS content back to factory corporate defaults? Sourced inquiries and published blogs will not be deleted.')) {
+                    localStorage.removeItem('dexton_config');
+                    localStorage.removeItem('dexton_theme_mode');
+                    localStorage.removeItem('dexton_color_theme');
+                    localStorage.removeItem('dexton_custom_primary');
+                    localStorage.removeItem('dexton_custom_accent');
+                    localStorage.removeItem('dexton_bg_type');
+                    localStorage.removeItem('dexton_custom_bg');
+                    localStorage.removeItem('dexton_light_bg_type');
+                    localStorage.removeItem('dexton_custom_light_bg');
+                    localStorage.removeItem('dexton_theme_v3_initialized');
+                    
+                    // CMS keys
+                    localStorage.removeItem('dexton_hero_config');
+                    localStorage.removeItem('dexton_stats_config');
+                    localStorage.removeItem('dexton_testimonials');
+                    localStorage.removeItem('dexton_testimonials_initialized');
+                    localStorage.removeItem('dexton_faqs');
+                    localStorage.removeItem('dexton_faqs_initialized');
+
+                    // Page and dynamic builder keys
+                    localStorage.removeItem('dexton_menu_pages');
+                    localStorage.removeItem('dexton_menu_services');
+                    localStorage.removeItem('dexton_homepage_sections');
+                    localStorage.removeItem('dexton_logo_shape');
+                    localStorage.removeItem('dexton_logo_grad_start');
+                    localStorage.removeItem('dexton_logo_grad_end');
+                    localStorage.removeItem('dexton_logo_bevel_start');
+                    localStorage.removeItem('dexton_logo_bevel_end');
+                    localStorage.removeItem('dexton_logo_text_first');
+                    localStorage.removeItem('dexton_logo_text_second');
+                    localStorage.removeItem('dexton_logo_tagline');
+                    localStorage.removeItem('dexton_logo_image_url');
+                    localStorage.removeItem('dexton_custom_card_bg');
+                    localStorage.removeItem('dexton_custom_body_text');
+                    localStorage.removeItem('dexton_custom_sec_text');
+                    localStorage.removeItem('dexton_custom_border');
+                    
+                    // Clear subpage overrides
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith('dexton_page_content_')) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    
+                    // Force refresh setup
+                    localStorage.setItem('dexton_theme_mode', 'light');
+                    localStorage.setItem('dexton_color_theme', 'blue');
+                    localStorage.setItem('dexton_theme_v3_initialized', 'true');
+                    
+                    // Re-init variables in database
+                    const defaultConfig = {
+                        companyName: "Dexton Solvexx",
+                        tagline: "Connecting Global Talent. Delivering Workforce Excellence.",
+                        telephone: "+1 (800) 555-DEXTON\n+44 (20) 7946-0925",
+                        email: "solutions@dextonsolvexx.com\ninfo@dextonsolvexx.com",
+                        address: "73-77 Executive Plaza, 5th Floor,\nFinancial District, Singapore 018981"
+                    };
+                    localStorage.setItem('dexton_config', JSON.stringify(defaultConfig));
+
+                    loadConfigData();
+                    loadHeroStatsData();
+                    loadTestimonialData();
+                    loadFaqData();
+                    loadPagesMenuData();
+                    resetTestimonialForm();
+                    resetFaqForm();
+                    showToast('Default styles, contacts, and homepage CMS data restored successfully.');
+                }
+            });
+
+            /* --- BLOG FORM CONTROLS --- */
+            blogForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const title = document.getElementById('blog-title').value.trim();
+                const category = document.getElementById('blog-category').value.trim();
+                const summary = document.getElementById('blog-summary').value.trim();
+                const readtime = document.getElementById('blog-readtime').value.trim();
+                const date = document.getElementById('blog-date').value.trim();
+
+                const newBlog = {
+                    title,
+                    category,
+                    summary,
+                    readtime,
+                    date
+                };
+
+                blogList.push(newBlog);
+                localStorage.setItem('dexton_custom_blogs', JSON.stringify(blogList));
+
+                blogForm.reset();
+                // Autofill current date as standard guideline
+                autofillBlogDate();
+                loadBlogData();
+                showToast('Dynamic insight article published!');
+            });
+
+            const autofillBlogDate = () => {
+                const now = new Date();
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                document.getElementById('blog-date').value = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+                document.getElementById('blog-readtime').value = '5 Min Read';
+            };
+            autofillBlogDate();
+
+            /* --- LEADS CONTROLS --- */
+            // 1. Search Box
+            leadSearchInput.addEventListener('input', () => {
+                const query = leadSearchInput.value.trim().toLowerCase();
+                if (query === '') {
+                    const sorted = [...leadsList].sort((a,b) => b.id - a.id);
+                    renderLeadsTable(sorted);
+                    return;
+                }
+
+                const filtered = leadsList.filter(l => 
+                    (l.name && l.name.toLowerCase().includes(query)) ||
+                    (l.email && l.email.toLowerCase().includes(query)) ||
+                    (l.company && l.company.toLowerCase().includes(query)) ||
+                    (l.service && l.service.toLowerCase().includes(query)) ||
+                    (l.message && l.message.toLowerCase().includes(query))
+                );
+                
+                const sorted = [...filtered].sort((a,b) => b.id - a.id);
+                renderLeadsTable(sorted);
+            });
+
+            // 2. Clear All Leads
+            document.getElementById('btn-clear-leads').addEventListener('click', () => {
+                if (leadsList.length === 0) {
+                    alert('No leads exist to clear.');
+                    return;
+                }
+
+                if (confirm('Are you absolutely sure you want to CLEAR ALL lead registrations? This database purge cannot be undone.')) {
+                    localStorage.setItem('dexton_leads', '[]');
+                    loadLeadData();
+                    showToast('Lead inquiries cleared.');
+                }
+            });
+
+            // 3. Export to CSV
+            document.getElementById('btn-export-csv').addEventListener('click', () => {
+                if (leadsList.length === 0) {
+                    alert('No leads available in local database to export.');
+                    return;
+                }
+
+                // Build CSV string
+                let csv = 'ID,Date,Client Name,Business Email,Phone,Company,Mandate/Service Interest,Message\n';
+                
+                leadsList.forEach(l => {
+                    const row = [
+                        l.id,
+                        l.date || '',
+                        cleanCsvField(l.name),
+                        cleanCsvField(l.email),
+                        cleanCsvField(l.phone),
+                        cleanCsvField(l.company),
+                        cleanCsvField(l.service),
+                        cleanCsvField(l.message)
+                    ];
+                    csv += row.join(',') + '\n';
+                });
+
+                // Download trigger
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", `dexton_leads_export_${Date.now()}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showToast('Leads database exported to CSV successfully!');
+            });
+
+            const cleanCsvField = (text) => {
+                if (!text) return '""';
+                let cleaned = text.replace(/"/g, '""'); // escape double quotes
+                return `"${cleaned.replace(/\n/g, ' ')}"`; // surround in quotes and strip linebreaks
+            };
+
+            /* --- TOAST NOTIFICATIONS --- */
+            const showToast = (message) => {
+                const toast = document.getElementById('toast-notification');
+                document.getElementById('toast-message').textContent = message;
+                toast.classList.add('active');
+
+                setTimeout(() => {
+                    toast.classList.remove('active');
+                }, 3500);
+            };
+
+            /* --- CMS LOADER & BIND FUNCTIONS --- */
+            // 4. Load Hero & Stats Config
+            const loadHeroStatsData = () => {
+                let heroConfig = JSON.parse(localStorage.getItem('dexton_hero_config'));
+                if (!heroConfig) {
+                    heroConfig = {
+                        title: 'Global Offshore <br><span style="background: linear-gradient(135deg, #0091FF 0%, #1E40AF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Recruitment Solutions</span> for Growing Businesses',
+                        subtitle: 'Unlock global scaling by tapping into highly vetted offshore talent across IT, Healthcare, Finance, Engineering, Digital Marketing, and Executive Leadership. We build dedicated offshore remote divisions designed to accelerate business productivity.',
+                        cta1Text: 'Request Consultation',
+                        cta1Link: 'contact.html',
+                        cta2Text: 'Explore Services',
+                        cta2Link: 'services.html'
+                    };
+                    localStorage.setItem('dexton_hero_config', JSON.stringify(heroConfig));
+                }
+
+                let statsConfig = JSON.parse(localStorage.getItem('dexton_stats_config'));
+                if (!statsConfig) {
+                    statsConfig = {
+                        stat1Target: '15000', stat1Suffix: '+', stat1Label: 'Elite Placements Filled',
+                        stat2Target: '98', stat2Suffix: '%', stat2Label: 'Client Retention Rate',
+                        stat3Target: '70', stat3Suffix: '%', stat3Label: 'Average Cost Reduction',
+                        stat4Target: '35', stat4Suffix: '', stat4Label: 'Sourcing Partner Regions'
+                    };
+                    localStorage.setItem('dexton_stats_config', JSON.stringify(statsConfig));
+                }
+
+                // Populate Hero fields
+                document.getElementById('hero-title-input').value = heroConfig.title || '';
+                document.getElementById('hero-subtitle-input').value = heroConfig.subtitle || '';
+                document.getElementById('hero-cta1-text').value = heroConfig.cta1Text || '';
+                document.getElementById('hero-cta1-link').value = heroConfig.cta1Link || '';
+                document.getElementById('hero-cta2-text').value = heroConfig.cta2Text || '';
+                document.getElementById('hero-cta2-link').value = heroConfig.cta2Link || '';
+
+                // Populate Stats fields
+                document.getElementById('stat1-target').value = statsConfig.stat1Target || '';
+                document.getElementById('stat1-suffix').value = statsConfig.stat1Suffix || '';
+                document.getElementById('stat1-label').value = statsConfig.stat1Label || '';
+
+                document.getElementById('stat2-target').value = statsConfig.stat2Target || '';
+                document.getElementById('stat2-suffix').value = statsConfig.stat2Suffix || '';
+                document.getElementById('stat2-label').value = statsConfig.stat2Label || '';
+
+                document.getElementById('stat3-target').value = statsConfig.stat3Target || '';
+                document.getElementById('stat3-suffix').value = statsConfig.stat3Suffix || '';
+                document.getElementById('stat3-label').value = statsConfig.stat3Label || '';
+
+                document.getElementById('stat4-target').value = statsConfig.stat4Target || '';
+                document.getElementById('stat4-suffix').value = statsConfig.stat4Suffix || '';
+                document.getElementById('stat4-label').value = statsConfig.stat4Label || '';
+            };
+
+            // 5. Load Testimonials Config
+            let testimonialList = [];
+            const loadTestimonialData = () => {
+                let testimonials = JSON.parse(localStorage.getItem('dexton_testimonials'));
+                if (!testimonials || localStorage.getItem('dexton_testimonials_initialized') !== 'true') {
+                    testimonials = [
+                        {
+                            name: "Marcus Sterling",
+                            role: "CTO, Enterprise Cloud Systems",
+                            feedback: "Partnering with Dexton Solvexx allowed us to scale our cloud engineering team by 15 developers in less than a month. The candidates are highly skilled, communicate fluently in English, and fit right into our timezone.",
+                            initials: "MS"
+                        },
+                        {
+                            name: "Alisha Rodriguez",
+                            role: "VP of Operations, HealthFirst Inc.",
+                            feedback: "We migrated our back-office accounting and medical billing operations to a dedicated team built by Dexton Solvexx. Our operational costs decreased by 65%, and the compliance and security are second to none.",
+                            initials: "AR"
+                        },
+                        {
+                            name: "Jonathan Hughes",
+                            role: "Director of HR, Global FinTech Group",
+                            feedback: "Their RPO services completely revitalized our global recruitment pipelines. They helped us source elite product designers and marketing executives while keeping our average cost per hire very low.",
+                            initials: "JH"
+                        }
+                    ];
+                    localStorage.setItem('dexton_testimonials', JSON.stringify(testimonials));
+                    localStorage.setItem('dexton_testimonials_initialized', 'true');
+                }
+
+                testimonialList = testimonials;
+
+                const listContainer = document.getElementById('admin-testimonial-list');
+                listContainer.innerHTML = '';
+
+                if (testimonialList.length === 0) {
+                    listContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem; border: 1px dashed #1f2937; border-radius: 8px;">No testimonials active. Please add one.</div>';
+                    return;
+                }
+
+                testimonialList.forEach((item, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'blog-admin-item';
+                    el.style.marginBottom = '0.75rem';
+                    el.innerHTML = `
+                        <div style="flex-grow: 1; padding-right: 1rem;">
+                            <div class="blog-admin-title" style="font-weight: 700;">${escapeHtml(item.name)} <span style="font-weight: 400; font-size: 0.8rem; color: #9ca3af;">(${escapeHtml(item.role)})</span></div>
+                            <div class="blog-admin-meta" style="margin-top: 0.25rem; font-style: italic; font-size: 0.85rem; line-height: 1.4; color: #d1d5db;">"${escapeHtml(item.feedback)}"</div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <div class="btn-edit-testimonial" data-index="${index}" title="Edit Testimonial" style="cursor: pointer; padding: 4px; color: var(--color-accent, #0091ff);">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </div>
+                            <div class="btn-delete-testimonial" data-index="${index}" title="Delete Testimonial" style="cursor: pointer; padding: 4px; color: #ef4444;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    `;
+                    listContainer.appendChild(el);
+                });
+
+                // Attach testimonial edit and delete click triggers
+                listContainer.querySelectorAll('.btn-edit-testimonial').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        const item = testimonialList[idx];
+                        document.getElementById('testimonial-edit-index').value = idx;
+                        document.getElementById('testimonial-name').value = item.name;
+                        document.getElementById('testimonial-role').value = item.role;
+                        document.getElementById('testimonial-feedback').value = item.feedback;
+                        document.getElementById('testimonial-initials').value = item.initials || '';
+                        
+                        document.getElementById('testimonial-form-title').textContent = 'Edit Testimonial';
+                        document.getElementById('testimonial-submit-btn').textContent = 'Update Testimonial';
+                        document.getElementById('testimonial-cancel-btn').style.display = 'inline-block';
+                    });
+                });
+
+                listContainer.querySelectorAll('.btn-delete-testimonial').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        if (confirm('Delete this client testimonial?')) {
+                            testimonialList.splice(idx, 1);
+                            localStorage.setItem('dexton_testimonials', JSON.stringify(testimonialList));
+                            loadTestimonialData();
+                            showToast('Testimonial removed successfully.');
+                            resetTestimonialForm();
+                        }
+                    });
+                });
+            };
+
+            const resetTestimonialForm = () => {
+                document.getElementById('testimonial-form').reset();
+                document.getElementById('testimonial-edit-index').value = "-1";
+                document.getElementById('testimonial-form-title').textContent = 'Add New Testimonial';
+                document.getElementById('testimonial-submit-btn').textContent = 'Publish Testimonial';
+                document.getElementById('testimonial-cancel-btn').style.display = 'none';
+            };
+
+            // 6. Load FAQs Config
+            let faqList = [];
+            const loadFaqData = () => {
+                let faqs = JSON.parse(localStorage.getItem('dexton_faqs'));
+                if (!faqs || localStorage.getItem('dexton_faqs_initialized') !== 'true') {
+                    faqs = [
+                        {
+                            question: "What is Recruitment Process Outsourcing (RPO)?",
+                            answer: "Recruitment Process Outsourcing is a partnership where a specialized provider manages all or part of a company's internal hiring operations. Unlike transactional staffing, Dexton Solvexx acts as an operational extension of your HR wing, designing custom pipelines, employing cutting-edge recruitment technology, and managing compliance structures to drive talent retention."
+                        },
+                        {
+                            question: "How does cross-border contracting and billing operate?",
+                            answer: "Dexton Solvexx operates as the Employer of Record (EOR) or global contracting vendor depending on the engagement. You receive a single, consolidated monthly business invoice in your local currency. We navigate all international compliance requirements, legal filings, tax compliance systems, and benefits operations in the talent's home region."
+                        },
+                        {
+                            question: "Can we transfer remote staff to direct employment?",
+                            answer: "Yes, our contracts support direct transfer options. Once candidates complete a defined service tenure with Dexton Solvexx, clients can seamlessly transition individuals to internal hiring structures subject to standard transfer agreement rules."
+                        },
+                        {
+                            question: "How does Dexton Solvexx handle data security and physical hardware?",
+                            answer: "Data security is critical. All our operations follow strict ISO 27001 parameters and GDPR legal bounds. We structure comprehensive IP protection clauses directly into our customer agreements. Furthermore, we help source, configure, and ship encrypted, MDM-managed computers directly to your offshore workers."
+                        },
+                        {
+                            question: "Are the candidates fluent in professional English?",
+                            answer: "Absolutely. Sourced candidates face strict verbal, syntactic, and technical communications audits. We only introduce professionals who possess high levels of written and spoken native-equivalent corporate English proficiency, ensuring seamless integration into Western business units."
+                        },
+                        {
+                            question: "What time zones can the offshore candidates support?",
+                            answer: "Our global talent pool allows us to cover any core timezone. We configure our talent to match your exact working hours, providing coverage across US Eastern, Pacific, UK Greenwhich, Australian Eastern, or European Central times."
+                        },
+                        {
+                            question: "What happens if a placement does not perform as expected?",
+                            answer: "We offer a solid replacement guarantee. Every permanent placement includes a 90-day structural guarantee. If a candidate underperforms or leaves during this window, we source, qualify, and integrate a suitable replacement at zero additional recruitment cost."
+                        },
+                        {
+                            question: "What typical onboarding periods are required?",
+                            answer: "Our pre-vetted active network allows us to onboard standard professionals within 1 to 2 weeks. For highly custom, niche executive capabilities or complex engineering setups, sourcing and onboarding typically ranges between 3 to 4 weeks."
+                        },
+                        {
+                            question: "Is there a minimum size for offshore remote teams?",
+                            answer: "No. We construct remote offshore offices ranging from a single specialized software developer to comprehensive 100+ seat multi-functional business divisions. Our models scale dynamically based on your organic structural needs."
+                        },
+                        {
+                            question: "How do you maintain candidate retention?",
+                            answer: "Candidate retention is driven by competitive compensation scaling, structured training, clear career roadmaps, and dedicated local HR managers. Dexton Solvexx maintains regular feedback cycles with remote talent, resulting in a 95% retention rate."
+                        }
+                    ];
+                    localStorage.setItem('dexton_faqs', JSON.stringify(faqs));
+                    localStorage.setItem('dexton_faqs_initialized', 'true');
+                }
+
+                faqList = faqs;
+
+                const listContainer = document.getElementById('admin-faq-list');
+                listContainer.innerHTML = '';
+
+                if (faqList.length === 0) {
+                    listContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem; border: 1px dashed #1f2937; border-radius: 8px;">No FAQs active. Please add one.</div>';
+                    return;
+                }
+
+                faqList.forEach((item, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'blog-admin-item';
+                    el.style.marginBottom = '0.75rem';
+                    el.innerHTML = `
+                        <div style="flex-grow: 1; padding-right: 1rem;">
+                            <div class="blog-admin-title" style="font-weight: 700;">Q: ${escapeHtml(item.question)}</div>
+                            <div class="blog-admin-meta" style="margin-top: 0.25rem; font-size: 0.85rem; line-height: 1.4; color: #d1d5db;">A: ${escapeHtml(item.answer)}</div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; align-self: flex-start;">
+                            <div class="btn-edit-faq" data-index="${index}" title="Edit FAQ" style="cursor: pointer; padding: 4px; color: var(--color-accent, #0091ff);">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </div>
+                            <div class="btn-delete-faq" data-index="${index}" title="Delete FAQ" style="cursor: pointer; padding: 4px; color: #ef4444;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    `;
+                    listContainer.appendChild(el);
+                });
+
+                // Attach FAQ edit and delete click triggers
+                listContainer.querySelectorAll('.btn-edit-faq').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        const item = faqList[idx];
+                        document.getElementById('faq-edit-index').value = idx;
+                        document.getElementById('faq-question-input').value = item.question;
+                        document.getElementById('faq-answer-input').value = item.answer;
+                        
+                        document.getElementById('faq-form-title').textContent = 'Edit FAQ';
+                        document.getElementById('faq-submit-btn').textContent = 'Update FAQ';
+                        document.getElementById('faq-cancel-btn').style.display = 'inline-block';
+                    });
+                });
+
+                listContainer.querySelectorAll('.btn-delete-faq').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        if (confirm('Delete this FAQ item?')) {
+                            faqList.splice(idx, 1);
+                            localStorage.setItem('dexton_faqs', JSON.stringify(faqList));
+                            loadFaqData();
+                            showToast('FAQ removed successfully.');
+                            resetFaqForm();
+                        }
+                    });
+                });
+            };
+
+            const resetFaqForm = () => {
+                document.getElementById('faq-form').reset();
+                document.getElementById('faq-edit-index').value = "-1";
+                document.getElementById('faq-form-title').textContent = 'Add New FAQ';
+                document.getElementById('faq-submit-btn').textContent = 'Publish FAQ';
+                document.getElementById('faq-cancel-btn').style.display = 'none';
+            };
+
+            // 7. Bind CMS Form Event Listeners
+            const bindCMSChangeEvents = () => {
+                // Hero & Stats Form
+                const heroStatsForm = document.getElementById('hero-stats-form');
+                heroStatsForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const heroConfig = {
+                        title: document.getElementById('hero-title-input').value.trim(),
+                        subtitle: document.getElementById('hero-subtitle-input').value.trim(),
+                        cta1Text: document.getElementById('hero-cta1-text').value.trim(),
+                        cta1Link: document.getElementById('hero-cta1-text').value.trim() ? document.getElementById('hero-cta1-link').value.trim() : 'contact.html',
+                        cta2Text: document.getElementById('hero-cta2-text').value.trim(),
+                        cta2Link: document.getElementById('hero-cta2-text').value.trim() ? document.getElementById('hero-cta2-link').value.trim() : 'services.html'
+                    };
+
+                    const statsConfig = {
+                        stat1Target: document.getElementById('stat1-target').value.trim(),
+                        stat1Suffix: document.getElementById('stat1-suffix').value.trim(),
+                        stat1Label: document.getElementById('stat1-label').value.trim(),
+                        
+                        stat2Target: document.getElementById('stat2-target').value.trim(),
+                        stat2Suffix: document.getElementById('stat2-suffix').value.trim(),
+                        stat2Label: document.getElementById('stat2-label').value.trim(),
+                        
+                        stat3Target: document.getElementById('stat3-target').value.trim(),
+                        stat3Suffix: document.getElementById('stat3-suffix').value.trim(),
+                        stat3Label: document.getElementById('stat3-label').value.trim(),
+                        
+                        stat4Target: document.getElementById('stat4-target').value.trim(),
+                        stat4Suffix: document.getElementById('stat4-suffix').value.trim(),
+                        stat4Label: document.getElementById('stat4-label').value.trim()
+                    };
+
+                    localStorage.setItem('dexton_hero_config', JSON.stringify(heroConfig));
+                    localStorage.setItem('dexton_stats_config', JSON.stringify(statsConfig));
+
+                    showToast('Hero & Statistics configured successfully!');
+                });
+
+                // Testimonial Form Submit (Add/Edit)
+                const testimonialForm = document.getElementById('testimonial-form');
+                testimonialForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const idx = parseInt(document.getElementById('testimonial-edit-index').value);
+                    const name = document.getElementById('testimonial-name').value.trim();
+                    const role = document.getElementById('testimonial-role').value.trim();
+                    const feedback = document.getElementById('testimonial-feedback').value.trim();
+                    let initials = document.getElementById('testimonial-initials').value.trim();
+
+                    if (!initials && name) {
+                        initials = name.split(' ').map(n => n[0]).join('').substring(0, 3).toUpperCase();
+                    }
+
+                    const testimonialData = { name, role, feedback, initials };
+
+                    if (idx >= 0) {
+                        // Edit mode
+                        testimonialList[idx] = testimonialData;
+                        showToast('Testimonial updated successfully.');
+                    } else {
+                        // Add mode
+                        testimonialList.push(testimonialData);
+                        showToast('Testimonial published successfully.');
+                    }
+
+                    localStorage.setItem('dexton_testimonials', JSON.stringify(testimonialList));
+                    loadTestimonialData();
+                    resetTestimonialForm();
+                });
+
+                // Testimonial Cancel Edit
+                document.getElementById('testimonial-cancel-btn').addEventListener('click', () => {
+                    resetTestimonialForm();
+                });
+
+                // FAQ Form Submit (Add/Edit)
+                const faqForm = document.getElementById('faq-form');
+                faqForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const idx = parseInt(document.getElementById('faq-edit-index').value);
+                    const question = document.getElementById('faq-question-input').value.trim();
+                    const answer = document.getElementById('faq-answer-input').value.trim();
+
+                    const faqData = { question, answer };
+
+                    if (idx >= 0) {
+                        // Edit mode
+                        faqList[idx] = faqData;
+                        showToast('FAQ item updated successfully.');
+                    } else {
+                        // Add mode
+                        faqList.push(faqData);
+                        showToast('FAQ item published successfully.');
+                    }
+
+                    localStorage.setItem('dexton_faqs', JSON.stringify(faqList));
+                    loadFaqData();
+                    resetFaqForm();
+                });
+
+                // FAQ Cancel Edit
+                document.getElementById('faq-cancel-btn').addEventListener('click', () => {
+                    resetFaqForm();
+                });
+            };
+
+            // HTML Sanitization
+            const escapeHtml = (text) => {
+                if (!text) return '';
+                return text
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            };
+
+            // State variables for Pages & Menu
+            let localMenuPages = [];
+            let localMenuServices = [];
+            
+            const loadPagesMenuData = () => {
+                // 1. Load Homepage sections
+                let activeSections = JSON.parse(localStorage.getItem('dexton_homepage_sections'));
+                if (!activeSections) {
+                    activeSections = {
+                        hero: true,
+                        stats: true,
+                        services: true,
+                        industries: true,
+                        timeline: true,
+                        testimonials: true,
+                        faqs: true,
+                        blog: true,
+                        contact: true
+                    };
+                    localStorage.setItem('dexton_homepage_sections', JSON.stringify(activeSections));
+                }
+                
+                // Set toggles
+                for (const section in activeSections) {
+                    const toggleInput = document.getElementById(`section-toggle-${section}`);
+                    if (toggleInput) {
+                        toggleInput.checked = activeSections[section];
+                    }
+                }
+                
+                // 2. Load Top-level Page Visibility
+                localMenuPages = JSON.parse(localStorage.getItem('dexton_menu_pages'));
+                if (!localMenuPages) {
+                    localMenuPages = [
+                        { name: "Home", link: "index.html", visible: true },
+                        { name: "About Us", link: "about.html", visible: true },
+                        { name: "Services", link: "services.html", visible: true, isDropdown: true },
+                        { name: "Industries", link: "industries.html", visible: true, isDropdown: true },
+                        { name: "Blog", link: "blog.html", visible: true },
+                        { name: "Contact", link: "contact.html", visible: true }
+                    ];
+                    localStorage.setItem('dexton_menu_pages', JSON.stringify(localMenuPages));
+                }
+                
+                const pagesContainer = document.getElementById('pages-visibility-container');
+                pagesContainer.innerHTML = '';
+                localMenuPages.forEach((page, index) => {
+                    const label = document.createElement('label');
+                    label.className = 'form-label';
+                    label.style = 'display: flex; align-items: center; justify-content: space-between; cursor: pointer; text-transform: none; font-size: 0.9rem; font-weight: 500; background-color: #1f2937; padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);';
+                    label.innerHTML = `
+                        <span>${escapeHtml(page.name)}</span>
+                        <input type="checkbox" class="page-vis-toggle" data-index="${index}" ${page.visible ? 'checked' : ''} style="width: 18px; height: 18px; cursor: pointer;">
+                    `;
+                    pagesContainer.appendChild(label);
+                });
+                
+                // 3. Load Services list
+                localMenuServices = JSON.parse(localStorage.getItem('dexton_menu_services'));
+                if (!localMenuServices) {
+                    localMenuServices = [
+                        { name: "Offshore Recruitment", link: "offshore-recruitment.html", visible: true, group: "none" },
+                        { name: "Full Cycle Recruitment", link: "rpo-services.html", visible: true, group: "offshore" },
+                        { name: "Candidate Sourcing & Vetting", link: "talent-acquisition.html", visible: true, group: "offshore" },
+                        { name: "Market Sourcing & Mapping", link: "workforce-planning.html", visible: true, group: "offshore" },
+                        { name: "RPO Administrative Support", link: "services.html#rpo", visible: true, group: "offshore" },
+                        { name: "Finance & Accounting", link: "services.html#offshore", visible: true, group: "backoffice" },
+                        { name: "Virtual Staffing Services", link: "contract-staffing.html", visible: true, group: "direct" },
+                        { name: "Executive Search", link: "executive-search.html", visible: true, group: "direct" },
+                        { name: "Permanent Staffing", link: "permanent-staffing.html", visible: true, group: "direct" },
+                        { name: "Global Hiring Solutions", link: "global-hiring.html", visible: true, group: "direct" }
+                    ];
+                    localStorage.setItem('dexton_menu_services', JSON.stringify(localMenuServices));
+                }
+                
+                const servicesContainer = document.getElementById('services-list-container');
+                servicesContainer.innerHTML = '';
+                
+                if (localMenuServices.length === 0) {
+                    servicesContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem; border: 1px dashed #1f2937; border-radius: 8px;">No services link. Click Add to create one.</div>';
+                    return;
+                }
+                
+                localMenuServices.forEach((service, index) => {
+                    const el = document.createElement('div');
+                    el.className = 'blog-admin-item';
+                    
+                    let groupLabel = '';
+                    switch (service.group) {
+                        case 'none': groupLabel = 'Root Category'; break;
+                        case 'offshore': groupLabel = 'Offshore Group'; break;
+                        case 'backoffice': groupLabel = 'Back Office'; break;
+                        case 'direct': groupLabel = 'Direct Link'; break;
+                        default: groupLabel = 'Other';
+                    }
+                    
+                    el.innerHTML = `
+                        <div style="flex-grow: 1; padding-right: 1rem;">
+                            <div class="blog-admin-title" style="font-weight: 700;">${escapeHtml(service.name)}</div>
+                            <div class="blog-admin-meta" style="margin-top: 0.25rem;">
+                                <span style="color: var(--color-accent, #0091ff); font-weight: 600;">${groupLabel}</span> &bull; 
+                                <span style="font-family: monospace;">${escapeHtml(service.link)}</span> &bull; 
+                                <span>${service.visible ? 'Visible' : 'Hidden'}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; align-self: center;">
+                            <div class="btn-edit-service" data-index="${index}" title="Edit Link" style="cursor: pointer; padding: 4px; color: var(--color-accent, #0091ff);">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </div>
+                            <div class="btn-delete-service" data-index="${index}" title="Delete Link" style="cursor: pointer; padding: 4px; color: #ef4444;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    `;
+                    servicesContainer.appendChild(el);
+                });
+                
+                // Add click handlers for edit and delete service
+                servicesContainer.querySelectorAll('.btn-edit-service').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        const service = localMenuServices[idx];
+                        
+                        document.getElementById('service-index').value = idx;
+                        document.getElementById('service-name').value = service.name;
+                        document.getElementById('service-link').value = service.link;
+                        document.getElementById('service-group').value = service.group;
+                        document.getElementById('service-visible').checked = service.visible;
+                        
+                        document.getElementById('service-modal-title').textContent = 'Edit Service Link';
+                        document.getElementById('service-modal').classList.remove('hidden');
+                    });
+                });
+                
+                servicesContainer.querySelectorAll('.btn-delete-service').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        if (confirm(`Remove "${localMenuServices[idx].name}" from services navigation?`)) {
+                            localMenuServices.splice(idx, 1);
+                            localStorage.setItem('dexton_menu_services', JSON.stringify(localMenuServices));
+                            loadPagesMenuData();
+                            showToast('Service link deleted.');
+                        }
+                    });
+                });
+            };
+
+            const bindCMSBuilderEvents = () => {
+                // 1. Pages/Menu save button
+                document.getElementById('btn-save-pages-menu').addEventListener('click', () => {
+                    // Update section visibility map from checkboxes
+                    const activeSections = {
+                        hero: document.getElementById('section-toggle-hero').checked,
+                        stats: document.getElementById('section-toggle-stats').checked,
+                        services: document.getElementById('section-toggle-services').checked,
+                        industries: document.getElementById('section-toggle-industries').checked,
+                        timeline: document.getElementById('section-toggle-timeline').checked,
+                        testimonials: document.getElementById('section-toggle-testimonials').checked,
+                        faqs: document.getElementById('section-toggle-faqs').checked,
+                        blog: document.getElementById('section-toggle-blog').checked,
+                        contact: document.getElementById('section-toggle-contact').checked
+                    };
+                    localStorage.setItem('dexton_homepage_sections', JSON.stringify(activeSections));
+                    
+                    // Update Page visibility from checkboxes
+                    const visToggles = document.querySelectorAll('.page-vis-toggle');
+                    visToggles.forEach(toggle => {
+                        const idx = parseInt(toggle.getAttribute('data-index'));
+                        if (localMenuPages[idx]) {
+                            localMenuPages[idx].visible = toggle.checked;
+                        }
+                    });
+                    localStorage.setItem('dexton_menu_pages', JSON.stringify(localMenuPages));
+                    
+                    showToast('Pages & Navigation Menu configuration saved!');
+                });
+                
+                // 2. Open Modal for adding service link
+                document.getElementById('btn-add-service').addEventListener('click', () => {
+                    document.getElementById('service-index').value = "-1";
+                    document.getElementById('service-modal-form').reset();
+                    document.getElementById('service-modal-title').textContent = 'Add Service Link';
+                    document.getElementById('service-modal').classList.remove('hidden');
+                });
+                
+                // 3. Cancel modal
+                document.getElementById('btn-close-service-modal').addEventListener('click', () => {
+                    document.getElementById('service-modal').classList.add('hidden');
+                });
+                
+                // 4. Modal submit (add or edit service)
+                document.getElementById('service-modal-form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const idx = parseInt(document.getElementById('service-index').value);
+                    const name = document.getElementById('service-name').value.trim();
+                    const link = document.getElementById('service-link').value.trim();
+                    const group = document.getElementById('service-group').value;
+                    const visible = document.getElementById('service-visible').checked;
+                    
+                    const newService = { name, link, group, visible };
+                    
+                    if (idx >= 0) {
+                        localMenuServices[idx] = newService;
+                        showToast('Service link updated.');
+                    } else {
+                        localMenuServices.push(newService);
+                        showToast('New service link added.');
+                    }
+                    
+                    localStorage.setItem('dexton_menu_services', JSON.stringify(localMenuServices));
+                    document.getElementById('service-modal').classList.add('hidden');
+                    loadPagesMenuData();
+                });
+                
+                // 5. Reset defaults pages & services
+                document.getElementById('btn-pages-reset-defaults').addEventListener('click', () => {
+                    if (confirm('Reset navigation pages, active sections, and services links to defaults?')) {
+                        localStorage.removeItem('dexton_menu_pages');
+                        localStorage.removeItem('dexton_menu_services');
+                        localStorage.removeItem('dexton_homepage_sections');
+                        loadPagesMenuData();
+                        showToast('Default pages, sections, and menus restored.');
+                    }
+                });
+            };
+
+            /* --- PAGE CONTENT CONFIGURATOR LOGIC --- */
+            let currentBlocks = [];
+
+            const loadPageContentEditorData = (filename) => {
+                const storageKey = `dexton_page_content_${filename}`;
+                const savedData = localStorage.getItem(storageKey);
+                
+                if (savedData) {
+                    const config = JSON.parse(savedData);
+                    document.getElementById('page-hero-tag').value = config.hero?.tag || '';
+                    document.getElementById('page-hero-title').value = config.hero?.title || '';
+                    document.getElementById('page-hero-subtitle').value = config.hero?.subtitle || '';
+                    currentBlocks = config.blocks || [];
+                    renderBlocksList(filename);
+                } else {
+                    // Fetch default content from the actual HTML file
+                    fetch(filename)
+                        .then(res => {
+                            if (!res.ok) throw new Error('Failed to load file');
+                            return res.text();
+                        })
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            
+                            // Extract hero info
+                            const heroTagEl = doc.querySelector('.hero-section .section-tag, section:first-of-type .section-tag');
+                            const heroTitleEl = doc.querySelector('.hero-section .hero-title, section:first-of-type h1');
+                            const heroSubEl = doc.querySelector('.hero-section .hero-subtitle, section:first-of-type p');
+                            
+                            document.getElementById('page-hero-tag').value = heroTagEl ? heroTagEl.textContent.trim() : '';
+                            document.getElementById('page-hero-title').value = heroTitleEl ? heroTitleEl.innerHTML.trim() : '';
+                            document.getElementById('page-hero-subtitle').value = heroSubEl ? heroSubEl.textContent.trim() : '';
+                            
+                            // Extract content blocks
+                            currentBlocks = extractBlocksFromHTML(doc, filename);
+                            renderBlocksList(filename);
+                        })
+                        .catch(err => {
+                            console.error('Error fetching defaults:', err);
+                            document.getElementById('page-hero-tag').value = '';
+                            document.getElementById('page-hero-title').value = '';
+                            document.getElementById('page-hero-subtitle').value = '';
+                            currentBlocks = [];
+                            renderBlocksList(filename);
+                        });
+                }
+            };
+
+            const extractBlocksFromHTML = (doc, filename) => {
+                let containerSelector = '';
+                if (filename === 'about.html') {
+                    containerSelector = '.about-split > div:first-child';
+                } else if (filename === 'services.html') {
+                    containerSelector = '.poppins-override .col-md-9';
+                } else if (filename === 'industries.html') {
+                    containerSelector = 'section:nth-of-type(2) .grid-3, section:nth-of-type(2) .container';
+                } else if (filename === 'index.html') {
+                    return [];
+                } else {
+                    containerSelector = 'section:nth-of-type(2) .container > div, section:nth-of-type(2) .container';
+                }
+                
+                const container = doc.querySelector(containerSelector);
+                if (!container) return [];
+                
+                const blocks = [];
+                const headings = container.querySelectorAll('h2, h3, h4');
+                
+                if (headings.length > 0) {
+                    headings.forEach(heading => {
+                        let sibling = heading.nextElementSibling;
+                        let text = '';
+                        while (sibling && !['H2', 'H3', 'H4'].includes(sibling.tagName)) {
+                            if (sibling.tagName === 'P' || sibling.tagName === 'DIV') {
+                                text += sibling.innerHTML.trim() + '\n\n';
+                            }
+                            sibling = sibling.nextElementSibling;
+                        }
+                        blocks.push({
+                            title: heading.textContent.trim(),
+                            text: text.trim()
+                        });
+                    });
+                } else {
+                    const paragraphs = container.querySelectorAll('p');
+                    paragraphs.forEach((p, idx) => {
+                        blocks.push({
+                            title: `Section Part ${idx + 1}`,
+                            text: p.innerHTML.trim()
+                        });
+                    });
+                }
+                
+                return blocks;
+            };
+
+            const renderBlocksList = (filename) => {
+                const listContainer = document.getElementById('page-blocks-list');
+                const addBlockBtn = document.getElementById('btn-add-content-block');
+                
+                if (filename === 'index.html') {
+                    listContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem; border: 1px dashed #1f2937; border-radius: 8px;">Homepage content blocks are managed dynamically in separate specialized sections. Use the sidebar to configure Hero & Stats, Testimonials, FAQs, or Blog elements.</div>';
+                    addBlockBtn.style.display = 'none';
+                    return;
+                }
+                
+                addBlockBtn.style.display = '';
+                
+                if (currentBlocks.length === 0) {
+                    listContainer.innerHTML = '<div style="color: #9ca3af; text-align: center; padding: 2rem; border: 1px dashed #1f2937; border-radius: 8px;">No content blocks defined. Click "+ Add Block" to build content.</div>';
+                    return;
+                }
+                
+                listContainer.innerHTML = '';
+                currentBlocks.forEach((block, index) => {
+                    const blockEl = document.createElement('div');
+                    blockEl.className = 'block-editor-item';
+                    blockEl.style.cssText = 'background: rgba(31, 41, 55, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;';
+                    blockEl.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-accent, #0091ff);">Block #${index + 1}</span>
+                            <div class="btn-delete-admin btn-delete-block" data-index="${index}" style="margin: 0; padding: 0.25rem; cursor: pointer; color: #ef4444;" title="Delete Block">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" style="font-size: 0.75rem; text-transform: uppercase;">Heading</label>
+                            <input type="text" class="form-control block-title-input" value="${escapeHtml(block.title)}" placeholder="Heading text">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" style="font-size: 0.75rem; text-transform: uppercase;">Body Paragraph(s)</label>
+                            <textarea class="form-control block-text-input" rows="4" placeholder="Paragraph body content">${escapeHtml(block.text)}</textarea>
+                        </div>
+                    `;
+                    listContainer.appendChild(blockEl);
+                });
+                
+                // Add delete triggers
+                listContainer.querySelectorAll('.btn-delete-block').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        currentBlocks.splice(idx, 1);
+                        renderBlocksList(filename);
+                    });
+                });
+            };
+
+            const syncBlocksFromUI = () => {
+                const listContainer = document.getElementById('page-blocks-list');
+                const titleInputs = listContainer.querySelectorAll('.block-title-input');
+                const textInputs = listContainer.querySelectorAll('.block-text-input');
+                
+                titleInputs.forEach((input, index) => {
+                    if (currentBlocks[index]) {
+                        currentBlocks[index].title = input.value.trim();
+                    }
+                });
+                
+                textInputs.forEach((textarea, index) => {
+                    if (currentBlocks[index]) {
+                        currentBlocks[index].text = textarea.value.trim();
+                    }
+                });
+            };
+
+            const bindPageContentEvents = () => {
+                document.getElementById('page-select').addEventListener('change', (e) => {
+                    loadPageContentEditorData(e.target.value);
+                });
+                
+                document.getElementById('btn-add-content-block').addEventListener('click', () => {
+                    const filename = document.getElementById('page-select').value;
+                    syncBlocksFromUI();
+                    currentBlocks.push({
+                        title: 'New Section Heading',
+                        text: 'Paragraph text content...'
+                    });
+                    renderBlocksList(filename);
+                });
+                
+                document.getElementById('btn-save-page-content').addEventListener('click', () => {
+                    const filename = document.getElementById('page-select').value;
+                    syncBlocksFromUI();
+                    
+                    const pageConfig = {
+                        hero: {
+                            tag: document.getElementById('page-hero-tag').value.trim(),
+                            title: document.getElementById('page-hero-title').value.trim(),
+                            subtitle: document.getElementById('page-hero-subtitle').value.trim()
+                        },
+                        blocks: currentBlocks
+                    };
+                    
+                    localStorage.setItem(`dexton_page_content_${filename}`, JSON.stringify(pageConfig));
+                    showToast(`Content overrides for ${filename} saved! Propagating changes...`);
+                });
+            };
+
+            // Initialize Dashboard Directly
+            initializeDashboard();
+            loadPageContentEditorData('about.html');
+            bindPageContentEvents();
+        });
+    </script>
+
+    <!-- Add/Edit Service Link Modal -->
+    <div id="service-modal" class="login-overlay hidden" style="background: rgba(0,0,0,0.8); z-index: 10001;">
+        <div class="login-card" style="max-width: 500px; text-align: left; padding: 2.5rem;">
+            <h3 id="service-modal-title" class="login-title" style="text-align: left; margin-bottom: 1.5rem; font-size: 1.5rem;">Add Service Link</h3>
+            
+            <form id="service-modal-form">
+                <input type="hidden" id="service-index" value="">
+                
+                <div class="form-group">
+                    <label class="form-label" for="service-name">Service Name (Text)</label>
+                    <input type="text" id="service-name" class="form-control" placeholder="e.g. Talent Mapping Service" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="service-link">URL / Link Target</label>
+                    <input type="text" id="service-link" class="form-control" placeholder="e.g. talent-mapping.html" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="service-group">Dropdown Submenu Group</label>
+                    <select id="service-group" class="form-control" style="background-color: rgba(31, 41, 55, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff;">
+                        <option value="none">Offshore Recruitment (Root Category)</option>
+                        <option value="offshore">Submenu: Offshore Recruitment Group</option>
+                        <option value="backoffice">Submenu: Back Office Services</option>
+                        <option value="direct">Direct Link (Standalone in Services dropdown)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                    <input type="checkbox" id="service-visible" checked style="width: 18px; height: 18px; cursor: pointer;">
+                    <label class="form-label" for="service-visible" style="margin-bottom: 0; cursor: pointer; text-transform: none;">Visible in menus</label>
+                </div>
+                
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" id="btn-close-service-modal" class="btn btn-secondary" style="padding: 0.6rem 1.2rem; border-radius: 6px;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.2rem; border-radius: 6px;">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

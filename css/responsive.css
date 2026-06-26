@@ -1,0 +1,266 @@
+/* 
+========================================================================
+   DEXTON SOLVEXX - PREMIUM GLOBAL RECRUITMENT BRAND STYLING SYSTEM
+   Responsive Stylesheet - css/responsive.css
+======================================================================== 
+*/
+
+/* =====================================================================
+   Breakpoint: Desktop Resizing Optimization (< 1200px)
+   ===================================================================== */
+@media (max-width: 1200px) {
+    html {
+        font-size: 15px; /* Scale down rem base */
+    }
+
+    .container {
+        max-width: 960px;
+    }
+
+    .nav-menu {
+        gap: 1.5rem;
+    }
+}
+
+/* =====================================================================
+   Breakpoint: Tablet & Mobile Range (< 1024px)
+   Hides desktop navigation and initializes hamburger menu.
+   ===================================================================== */
+@media (max-width: 1023px) {
+    html {
+        font-size: 14.5px;
+    }
+
+    .container {
+        max-width: 720px;
+    }
+
+    :root {
+        --section-padding: 5.5rem 0;
+    }
+
+    /* Hide Desktop Navigation, Tagline & Mega Menu */
+    .nav-menu, .header-cta, .logo-wrapper .tagline {
+        display: none !important;
+    }
+
+    /* Reset flex rows to column stack and override inline column widths */
+    .row {
+        flex-direction: column !important;
+    }
+
+    .col-12, [class*="col-"] {
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Reset custom flex panels with inline widths (like blog featured article) */
+    .glass-panel[style*="display: flex"] {
+        flex-direction: column !important;
+    }
+
+    .glass-panel[style*="display: flex"] > div {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 2rem 1.5rem !important;
+    }
+
+    /* Prevent mobile auto-zoom on form inputs */
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+
+    /* Show Mobile Menu Trigger */
+    .mobile-trigger {
+        display: flex !important;
+    }
+
+    /* Adjust Header Spacing */
+    .header-container {
+        height: 75px;
+    }
+    
+    header.site-header.scrolled .header-container {
+        height: 65px;
+    }
+
+    /* Responsive Grid Columns Reset - 2 Columns on Tablet */
+    .grid-4, .grid-3, .grid-2, .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Timelines - Centering and restructuring for single-column */
+    .timeline::before {
+        left: 20px;
+    }
+
+    .timeline-badge {
+        left: 20px;
+        transform: translateX(-50%);
+    }
+    
+    .timeline-item:hover .timeline-badge {
+        transform: translateX(-50%) scale(1.1);
+    }
+
+    .timeline-panel {
+        width: calc(100% - 50px);
+        float: right !important;
+        margin-left: 50px;
+    }
+
+    .timeline-panel::before {
+        left: -10px;
+        right: auto !important;
+        border-left: none !important;
+        border-right: 10px solid var(--color-border) !important;
+    }
+
+    .timeline-panel::after {
+        left: -9px;
+        right: auto !important;
+        border-left: none !important;
+        border-right: 9px solid var(--color-white) !important;
+    }
+
+    /* About Us Columns */
+    .about-split {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .about-split-col {
+        width: 100% !important;
+    }
+}
+
+/* =====================================================================
+   Breakpoint: Mobile Range (< 768px)
+   Stacks columns to single column and handles touch spacing.
+   ===================================================================== */
+@media (max-width: 767px) {
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        max-width: 540px;
+    }
+
+    :root {
+        --section-padding: 4.5rem 0;
+    }
+
+    .section-title {
+        font-size: 2.125rem;
+    }
+
+    /* Reset grids to Single Column */
+    .grid-4, .grid-3, .grid-2, .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+    }
+
+    /* Footer structure alignment */
+    .footer-top .row {
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .footer-top [class*="col-"] {
+        width: 100% !important;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .footer-bottom-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    /* Hero adjustments */
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem !important;
+    }
+
+    .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .hero-ctas .btn {
+        width: 100%;
+    }
+
+    /* Float Widgets Positioning with Safe Area Support */
+    .back-to-top {
+        bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+        right: calc(1.5rem + env(safe-area-inset-right, 0px));
+        width: 44px;
+        height: 44px;
+    }
+
+    .floating-cta {
+        bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+        left: calc(1.5rem + env(safe-area-inset-left, 0px));
+        padding: 0.6rem 1.25rem;
+        font-size: 0.8rem;
+        min-height: 44px;
+        box-sizing: border-box;
+    }
+}
+
+/* =====================================================================
+   Breakpoint: Small Mobile Range (< 576px)
+   ===================================================================== */
+@media (max-width: 576px) {
+    html {
+        font-size: 13.5px;
+    }
+
+    .container {
+        padding-right: 1.25rem;
+        padding-left: 1.25rem;
+    }
+
+    .section-title {
+        font-size: 1.875rem;
+    }
+
+    .section-header {
+        margin-bottom: 3rem;
+    }
+
+    /* Hero spacing */
+    .hero-section {
+        padding-top: 130px !important;
+        padding-bottom: 70px !important;
+    }
+
+    .hero-title {
+        font-size: 2.15rem !important;
+    }
+
+    /* Form Fields alignment */
+    .contact-form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Mobile Navigation Drawer adjustments */
+    .mobile-drawer {
+        width: 100%;
+        padding-top: 5rem;
+    }
+}

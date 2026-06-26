@@ -1,0 +1,222 @@
+/* 
+========================================================================
+   DEXTON SOLVEXX - PREMIUM GLOBAL RECRUITMENT BRAND STYLING SYSTEM
+   Animation Configurations - css/animations.css
+======================================================================== 
+*/
+
+/* --- Keyframe Declarations --- */
+
+/* Standard Slide Up */
+@keyframes slideUp {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Standard Fade In */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Float Map and Network Nodes */
+@keyframes floatVisual {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(1deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+/* Glowing Pulsing Network Waves */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 145, 255, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(0, 145, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 145, 255, 0);
+    }
+}
+
+/* Rotation for 4D Vector Sphere/Network Ring */
+@keyframes spinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* Shiny Hover Sweep Effect */
+@keyframes shimmerSweep {
+    100% {
+        left: 125%;
+    }
+}
+
+/* Counter Visual Flash */
+@keyframes counterGlow {
+    0% { color: var(--color-white); }
+    50% { color: var(--color-accent); text-shadow: 0 0 8px var(--color-accent); }
+    100% { color: var(--color-white); }
+}
+
+/* --- Reveal Utility Classes (Toggled via Scroll Observer) --- */
+.reveal {
+    position: relative;
+    opacity: 0;
+    transition: all 0.8rem cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.reveal-up {
+    transform: translateY(40px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.8s ease;
+}
+
+.reveal-down {
+    transform: translateY(-40px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.8s ease;
+}
+
+.reveal-left {
+    transform: translateX(-40px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.8s ease;
+}
+
+.reveal-right {
+    transform: translateX(40px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.8s ease;
+}
+
+.reveal-scale {
+    transform: scale(0.92);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.8s ease;
+}
+
+/* Activated Scroll Reveal State */
+.reveal.active,
+.reveal-up.active,
+.reveal-down.active,
+.reveal-left.active,
+.reveal-right.active,
+.reveal-scale.active {
+    transform: translate(0) scale(1);
+    opacity: 1;
+}
+
+/* Delays */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+.delay-600 { transition-delay: 600ms; }
+.delay-700 { transition-delay: 700ms; }
+.delay-800 { transition-delay: 800ms; }
+
+/* --- Interactive State Transitions --- */
+
+/* Interactive Grids Hover Lift */
+.hover-lift {
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 20px 40px -15px rgba(0, 145, 255, 0.12), 0 0 20px rgba(0, 145, 255, 0.05);
+    border-color: rgba(0, 145, 255, 0.35) !important;
+}
+
+/* Floating Elements */
+.float-element {
+    animation: floatVisual 6s ease-in-out infinite;
+}
+
+.float-element-slow {
+    animation: floatVisual 9s ease-in-out infinite;
+}
+
+/* Network Pulsing Indicator */
+.pulse-indicator {
+    position: relative;
+}
+
+.pulse-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseGlow 2.5s infinite ease-out;
+    pointer-events: none;
+}
+
+/* Shimmer Button Effect Overlay */
+.btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+    transform: skewX(-25deg);
+    transition: none;
+}
+
+.btn-shimmer:hover::after {
+    animation: shimmerSweep 0.85s ease;
+}
+
+/* 4D Spinning Network Ring */
+.spin-ring {
+    animation: spinSlow 30s linear infinite;
+}
+
+.spin-ring-reverse {
+    animation: spinReverse 20s linear infinite;
+}
+
+/* Smooth Interactive Nav Menu transition */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.nav-link:hover::after, .nav-item.active .nav-link::after {
+    width: 100%;
+}

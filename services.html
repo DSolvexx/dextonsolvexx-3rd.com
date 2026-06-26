@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Discover Dexton Solvexx's comprehensive suite of RPO, offshore recruitment, executive search, permanent staffing, and global workforce solutions.">
+    <meta name="keywords" content="RPO services, offshore recruitment, executive search, global hiring solutions, contract staffing, talent acquisition consulting">
+    <meta name="author" content="Dexton Solvexx">
+    <link rel="canonical" href="services.html">
+    <title>Enterprise Sourcing & RPO Services | Dexton Solvexx</title>
+    
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- Breadcrumb JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "index.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "services.html"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Poppins Font Override & Services Checklist/Popup Styles -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+      /* Poppins Override Class */
+      .poppins-override, 
+      .poppins-override h1, 
+      .poppins-override h2, 
+      .poppins-override h3, 
+      .poppins-override h4, 
+      .poppins-override p, 
+      .poppins-override li, 
+      .poppins-override span, 
+      .poppins-override button, 
+      .poppins-override input, 
+      .poppins-override select, 
+      .poppins-override textarea {
+          font-family: 'Poppins', sans-serif !important;
+      }
+
+      /* Custom Checklist with green checkmarks ✓ */
+      .check-list {
+          list-style: none !important;
+          padding-left: 0 !important;
+          margin: 1.5rem 0 !important;
+      }
+
+      .check-list li {
+          position: relative !important;
+          padding-left: 32px !important;
+          margin-bottom: 0.85rem !important;
+          line-height: 1.6 !important;
+          color: var(--color-grey-dark) !important;
+          font-size: 0.95rem !important;
+          font-weight: 400 !important;
+      }
+
+      .check-list li::before {
+          content: "✓" !important;
+          position: absolute !important;
+          left: 0 !important;
+          top: 0 !important;
+          color: #10B981 !important; /* Premium Green */
+          font-weight: 800 !important;
+          font-size: 1.2rem !important;
+      }
+
+      /* Service Card CTA Buttons Group */
+      .service-cta-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-top: 1.75rem;
+      }
+
+      .service-cta-group .btn {
+          font-size: 0.85rem;
+          padding: 0.75rem 1.5rem;
+          border-radius: var(--radius-sm);
+          font-weight: 600;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+      }
+
+      /* RPO Transformation Form Container */
+      .transformation-banner {
+          background: linear-gradient(135deg, var(--color-bg-deep) 0%, var(--color-bg-dark) 100%);
+          border: 1px solid rgba(0, 145, 255, 0.2);
+          border-radius: var(--radius-md);
+          padding: 3rem;
+          color: var(--color-grey-dark);
+          margin-top: 4rem;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .transformation-banner::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(0, 145, 255, 0.08) 0%, transparent 60%);
+          pointer-events: none;
+      }
+
+      .transformation-banner h2 {
+          color: var(--color-grey-dark);
+          font-size: 2rem;
+          font-weight: 800;
+          margin-bottom: 0.75rem;
+      }
+
+      .transformation-banner p {
+          color: var(--color-grey);
+          margin-bottom: 2rem;
+          font-size: 1rem;
+          max-width: 700px;
+      }
+
+      .transformation-form {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.25rem;
+          align-items: center;
+      }
+
+      .transformation-form .form-group {
+          margin-bottom: 0;
+      }
+
+      .transformation-form input[type="text"],
+      .transformation-form input[type="email"],
+      .transformation-form input[type="tel"] {
+          width: 100%;
+          padding: 0.875rem 1.25rem;
+          background: var(--color-white);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-sm);
+          color: var(--color-grey-dark);
+          font-size: 0.95rem;
+          transition: all 0.3s ease;
+      }
+
+      .transformation-form input:focus {
+          border-color: var(--color-accent);
+          background: var(--color-white);
+          box-shadow: 0 0 10px rgba(0, 145, 255, 0.2);
+          outline: none;
+      }
+
+      .transformation-form .btn-submit {
+          width: 100%;
+          padding: 0.875rem;
+          background-color: var(--color-accent);
+          color: #111827;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          border-radius: var(--radius-sm);
+          transition: all 0.3s ease;
+      }
+
+      .transformation-form .btn-submit:hover {
+          background-color: var(--color-primary);
+          color: #FFFFFF;
+          box-shadow: var(--shadow-glow);
+          transform: translateY(-2px);
+      }
+
+      @media (max-width: 992px) {
+          .transformation-form {
+              grid-template-columns: 1fr;
+              gap: 1rem;
+          }
+          .transformation-banner {
+              padding: 2rem;
+          }
+      }
+
+      /* --- Interactive Popups (PUM Modals) --- */
+      .custom-pum-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background-color: rgba(11, 15, 25, 0.85);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: 2000;
+          opacity: 0;
+          visibility: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+          padding: 1.5rem;
+      }
+
+      .custom-pum-overlay.active {
+          opacity: 1;
+          visibility: visible;
+      }
+
+      .pum-container {
+          background-color: var(--color-white);
+          border-radius: var(--radius-md);
+          box-shadow: var(--shadow-xl), 0 0 35px rgba(0, 145, 255, 0.25);
+          border: 1px solid rgba(0, 145, 255, 0.2);
+          width: 100%;
+          max-width: 600px;
+          padding: 2.5rem;
+          position: relative;
+          transform: translateY(30px);
+          transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+          max-height: 90vh;
+          overflow-y: auto;
+      }
+
+      .custom-pum-overlay.active .pum-container {
+          transform: translateY(0);
+      }
+
+      .pum-close {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          width: 36px;
+          height: 36px;
+          background-color: var(--color-grey-light);
+          border-radius: 50%;
+          color: var(--color-grey-dark);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border: none;
+          z-index: 10;
+      }
+
+      .pum-close:hover {
+          background-color: var(--color-primary);
+          color: var(--color-white);
+          transform: rotate(90deg);
+      }
+
+      .pum-container h2 {
+          color: var(--color-primary);
+          font-size: 1.75rem;
+          font-weight: 800;
+          margin-bottom: 0.5rem;
+          letter-spacing: -0.01em;
+      }
+
+      .pum-container .modal-subtitle {
+          color: var(--color-grey);
+          font-size: 0.95rem;
+          margin-bottom: 1.5rem;
+          line-height: 1.5;
+      }
+
+      .pum-form .form-group {
+          margin-bottom: 1.25rem;
+      }
+
+      .pum-form label {
+          display: block;
+          font-size: 0.875rem;
+          font-weight: 600;
+          color: var(--color-grey-dark);
+          margin-bottom: 0.35rem;
+      }
+
+      .pum-form input[type="text"],
+      .pum-form input[type="email"],
+      .pum-form input[type="tel"],
+      .pum-form select,
+      .pum-form textarea {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--color-border);
+          font-size: 0.95rem;
+          background-color: var(--color-grey-light);
+          transition: all 0.3s ease;
+      }
+
+      .pum-form input:focus,
+      .pum-form select:focus,
+      .pum-form textarea:focus {
+          border-color: var(--color-accent);
+          background-color: var(--color-white);
+          box-shadow: 0 0 0 3px rgba(0, 145, 255, 0.15);
+          outline: none;
+      }
+
+      .pum-form .checkbox-group {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.5rem;
+          margin-bottom: 1.5rem;
+          background: var(--color-grey-light);
+          padding: 1rem;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--color-border);
+      }
+
+      .pum-form .checkbox-item {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.85rem;
+          color: var(--color-grey-dark);
+          cursor: pointer;
+      }
+
+      .pum-form .checkbox-item input {
+          width: auto;
+          cursor: pointer;
+      }
+
+      .pum-form .btn-submit {
+          width: 100%;
+          padding: 1rem;
+          background: #10B981; /* Emerald/Green */
+          color: var(--color-white);
+          border: none;
+          border-radius: var(--radius-sm);
+          font-size: 1.05rem;
+          font-weight: 700;
+          cursor: pointer;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          transition: all 0.3s ease;
+      }
+
+      .pum-form .btn-submit:hover {
+          background: #059669;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+      }
+
+      /* Calendly Widget Mockup */
+      .calendly-mockup {
+          background-color: var(--color-grey-light);
+          border: 1px dashed var(--color-accent);
+          border-radius: var(--radius-sm);
+          padding: 1.5rem;
+          margin-top: 1rem;
+          text-align: center;
+      }
+
+      .calendly-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid var(--color-border);
+          padding-bottom: 0.75rem;
+          margin-bottom: 1rem;
+          font-size: 0.85rem;
+          color: var(--color-grey);
+          font-weight: 600;
+      }
+
+      .calendar-grid {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+      }
+
+      .calendar-day-header {
+          font-weight: 700;
+          font-size: 0.75rem;
+          color: var(--color-grey);
+          text-transform: uppercase;
+      }
+
+      .calendar-day {
+          padding: 0.5rem;
+          border-radius: 50%;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          aspect-ratio: 1;
+          font-weight: 500;
+      }
+
+      .calendar-day:hover:not(.empty) {
+          background-color: var(--color-accent);
+          color: var(--color-white);
+      }
+
+      .calendar-day.active {
+          background-color: var(--color-primary);
+          color: var(--color-white);
+          font-weight: 700;
+      }
+
+      .calendar-day.empty {
+          cursor: default;
+          opacity: 0.2;
+      }
+
+      .time-slots-container {
+          border-top: 1px solid var(--color-border);
+          padding-top: 1rem;
+          margin-top: 1rem;
+          display: none;
+      }
+
+      .time-slots-container.active {
+          display: block;
+      }
+
+      .time-slots-title {
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: var(--color-primary);
+          margin-bottom: 0.75rem;
+          text-align: left;
+      }
+
+      .time-slots {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.5rem;
+      }
+
+      .time-slot {
+          padding: 0.5rem;
+          border: 1px solid var(--color-accent);
+          border-radius: var(--radius-sm);
+          font-size: 0.85rem;
+          color: var(--color-primary);
+          cursor: pointer;
+          text-align: center;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          background: var(--color-white);
+      }
+
+      .time-slot:hover {
+          background-color: var(--color-accent);
+          color: var(--color-white);
+      }
+
+      .time-slot.selected {
+          background-color: var(--color-primary);
+          color: var(--color-white);
+          border-color: var(--color-primary);
+      }
+
+      .calendar-confirm-btn {
+          width: 100%;
+          margin-top: 1.25rem;
+          padding: 0.75rem;
+          background-color: var(--color-primary);
+          color: var(--color-white);
+          font-weight: 700;
+          border-radius: var(--radius-sm);
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          letter-spacing: 0.05em;
+          transition: all 0.3s ease;
+          display: none;
+          border: none;
+      }
+
+      .calendar-confirm-btn.active {
+          display: block;
+      }
+
+      .calendar-confirm-btn:hover {
+          background-color: var(--color-primary-dark);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+      }
+
+      /* Thank You Modal Elements */
+      .thank-you-box {
+          text-align: center;
+      }
+
+      .thank-you-box .icon-success {
+          font-size: 4rem;
+          color: #10B981;
+          margin-bottom: 1.5rem;
+          animation: scaleUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      }
+
+      .thank-you-box h3 {
+          font-size: 1.5rem;
+          color: var(--color-grey-dark);
+          margin-bottom: 1.5rem;
+          font-weight: 700;
+      }
+
+      .thank-you-box ul {
+          text-align: left;
+          background-color: var(--color-grey-light);
+          padding: 1.5rem;
+          border-radius: var(--radius-sm);
+          border: 1px solid var(--color-border);
+          margin-bottom: 2rem;
+      }
+
+      .thank-you-box li {
+          font-size: 0.9rem;
+          color: var(--color-grey-dark);
+          margin-bottom: 0.5rem;
+          position: relative;
+          padding-left: 1.25rem;
+      }
+
+      .thank-you-box li::before {
+          content: '•';
+          position: absolute;
+          left: 0;
+          color: var(--color-accent);
+          font-weight: 700;
+      }
+
+      .thank-you-box .btn-call-recommended {
+          background-color: var(--color-accent);
+          color: var(--color-bg-dark);
+          font-weight: 700;
+          width: 100%;
+          padding: 1rem;
+          border-radius: var(--radius-sm);
+          margin-bottom: 1rem;
+          display: inline-block;
+          font-size: 0.95rem;
+          text-align: center;
+      }
+
+      .thank-you-box .btn-call-recommended:hover {
+          background-color: var(--color-primary);
+          color: var(--color-white);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-glow);
+      }
+
+      @keyframes scaleUp {
+          from {
+              transform: scale(0.5);
+              opacity: 0;
+          }
+          to {
+              transform: scale(1);
+              opacity: 1;
+          }
+      }
+    </style>
+</head>
+<body>
+
+    <!-- --- SITE HEADER --- -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="logo-wrapper">
+        <a href="index.html" class="logo-link">
+          <!-- 4D Vector Logo Icon -->
+          <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dexton Solvexx Logo">
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="var(--color-accent)" />
+                <stop offset="100%" stop-color="var(--color-primary)" />
+              </linearGradient>
+              <linearGradient id="logoGradGold" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#E5E7EB" />
+                <stop offset="50%" stop-color="#FFFFFF" />
+                <stop offset="100%" stop-color="#9CA3AF" />
+              </linearGradient>
+              <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <!-- 3D Bevel Arrowhead Symbol -->
+            <!-- Left Wing (D) -->
+            <path d="M 27 15 L 77 32 L 43 35 L 27 54 L 38 35 Z" fill="url(#logoGrad)" filter="url(#logoGlow)" />
+            <path d="M 27 15 L 43 35 L 27 54 L 33 50 L 45 35 L 33 19 Z" fill="url(#logoGradGold)" />
+            
+            <!-- Right Wing (S Ribbon) -->
+            <path d="M 43 35 L 77 32 L 62 45 L 48 40 Z" fill="url(#logoGradGold)" />
+            <path d="M 48 40 L 62 45 L 52 49 L 40 44 Z" fill="url(#logoGrad)" /></svg>
+          <div class="logo-text">DEXTON <span>SOLVEXX</span></div>
+        </a>
+        <div class="tagline">Connecting Global Talent. Delivering Workforce Excellence.</div>
+      </div>
+      
+      <!-- Desktop Navigation Menu -->
+      <nav class="nav-menu">
+        <div class="nav-item"><a href="index.html" class="nav-link">Home</a></div>
+        <div class="nav-item"><a href="about.html" class="nav-link">About Us</a></div>
+        
+        <!-- Services Dropdown -->
+        <div class="nav-item dropdown-parent">
+          <a href="services.html" class="nav-link">Services <svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1 3.5 L5 7.5 L9 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown-menu">
+            <div class="dropdown-submenu">
+              <a href="offshore-recruitment.html" class="dropdown-item"><span class="dropdown-link dropdown-link-arrow">Offshore Recruitment</span></a>
+              <div class="dropdown-menu">
+                <a href="rpo-services.html" class="dropdown-item"><span class="dropdown-link">Full Cycle Recruitment</span></a>
+                <a href="talent-acquisition.html" class="dropdown-item"><span class="dropdown-link">Candidate Sourcing & Vetting</span></a>
+                <a href="workforce-planning.html" class="dropdown-item"><span class="dropdown-link">Market Sourcing & Mapping</span></a>
+                <a href="services.html#rpo" class="dropdown-item"><span class="dropdown-link">RPO Administrative Support</span></a>
+              </div>
+            </div>
+            <div class="dropdown-submenu">
+              <a href="services.html#offshore" class="dropdown-item"><span class="dropdown-link dropdown-link-arrow">Back Office Services</span></a>
+              <div class="dropdown-menu">
+                <a href="services.html#offshore" class="dropdown-item"><span class="dropdown-link">Finance & Accounting</span></a>
+              </div>
+            </div>
+            <a href="contract-staffing.html" class="dropdown-item"><span class="dropdown-link">Virtual Staffing Services</span></a>
+            <a href="executive-search.html" class="dropdown-item"><span class="dropdown-link">Executive Search</span></a>
+            <a href="permanent-staffing.html" class="dropdown-item"><span class="dropdown-link">Permanent Staffing</span></a>
+            <a href="global-hiring.html" class="dropdown-item"><span class="dropdown-link">Global Hiring Solutions</span></a>
+          </div>
+        </div>
+        
+        <div class="nav-item dropdown-parent">
+          <a href="industries.html" class="nav-link">Industries <svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1 3.5 L5 7.5 L9 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="dropdown-menu">
+            <a href="industries.html#it" class="dropdown-item"><span class="dropdown-link">Information Technology</span></a>
+            <a href="industries.html#healthcare" class="dropdown-item"><span class="dropdown-link">Healthcare & Life Sciences</span></a>
+            <a href="industries.html#engineering" class="dropdown-item"><span class="dropdown-link">Engineering & Manufacturing</span></a>
+            <a href="industries.html#finance" class="dropdown-item"><span class="dropdown-link">Finance & Banking</span></a>
+            <a href="industries.html#logistics" class="dropdown-item"><span class="dropdown-link">Logistics & Supply Chain</span></a>
+            <a href="industries.html#retail" class="dropdown-item"><span class="dropdown-link">Retail & E-commerce</span></a>
+          </div>
+        </div>
+        
+        <div class="nav-item"><a href="blog.html" class="nav-link">Blog</a></div>
+        <div class="nav-item"><a href="contact.html" class="nav-link">Contact</a></div>
+      </nav>
+      
+      <!-- Header CTA -->
+      <div class="header-cta">
+        <a href="contact.html" class="btn btn-accent btn-shimmer">Consult Now</a>
+      </div>
+      
+      <!-- Mobile Navigation Trigger -->
+      <div class="mobile-trigger" role="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-haspopup="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Mobile Side Drawer -->
+  <div class="mobile-drawer-overlay"></div>
+  <div class="mobile-drawer">
+    <div class="mobile-drawer-close" role="button" aria-label="Close menu">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" fill="currentColor"/>
+      </svg>
+    </div>
+    <ul class="mobile-nav-links">
+      <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+      <li><a href="about.html" class="mobile-nav-link">About Us</a></li>
+      <li>
+        <a href="#" class="mobile-nav-link mobile-nav-link-parent">Services <svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1 3.5 L5 7.5 L9 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mobile-sub-menu">
+          <a href="services.html" class="mobile-sub-link">Services Directory</a>
+          
+          <div class="mobile-sub-parent">
+            <a href="#" class="mobile-sub-link mobile-sub-link-parent">Offshore Recruitment <svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1 3.5 L5 7.5 L9 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <div class="mobile-child-menu">
+              <a href="offshore-recruitment.html" class="mobile-child-link">Offshore Sourcing Overview</a>
+              <a href="rpo-services.html" class="mobile-child-link">Full Cycle Recruitment</a>
+              <a href="talent-acquisition.html" class="mobile-child-link">Candidate Sourcing & Vetting</a>
+              <a href="workforce-planning.html" class="mobile-child-link">Market Sourcing & Mapping</a>
+              <a href="services.html#rpo" class="mobile-child-link">RPO Administrative Support</a>
+            </div>
+          </div>
+          
+          <div class="mobile-sub-parent">
+            <a href="#" class="mobile-sub-link mobile-sub-link-parent">Back Office Services <svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1 3.5 L5 7.5 L9 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <div class="mobile-child-menu">
+              <a href="services.html#offshore" class="mobile-child-link">Finance & Accounting</a>
+            </div>
+          </div>
+          
+          <a href="contract-staffing.html" class="mobile-sub-link">Virtual Staffing Services</a>
+          <a href="executive-search.html" class="mobile-sub-link">Executive Search</a>
+          <a href="permanent-staffing.html" class="mobile-sub-link">Permanent Staffing</a>
+          <a href="global-hiring.html" class="mobile-sub-link">Global Hiring Solutions</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="mobile-nav-link mobile-nav-link-parent">Industries <svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M1 3.5 L5 7.5 L9 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mobile-sub-menu">
+          <a href="industries.html" class="mobile-sub-link">All Industries</a>
+          <a href="industries.html#it" class="mobile-sub-link">Information Technology</a>
+          <a href="industries.html#healthcare" class="mobile-sub-link">Healthcare & Life Sciences</a>
+          <a href="industries.html#engineering" class="mobile-sub-link">Engineering & Manufacturing</a>
+          <a href="industries.html#finance" class="mobile-sub-link">Finance & Banking</a>
+          <a href="industries.html#logistics" class="mobile-sub-link">Logistics & Supply Chain</a>
+          <a href="industries.html#retail" class="mobile-sub-link">Retail & E-commerce</a>
+        </div>
+      </li>
+      <li><a href="blog.html" class="mobile-nav-link">Blog</a></li>
+      <li><a href="contact.html" class="mobile-nav-link">Contact</a></li>
+    </ul>
+    <div style="margin-top: 2rem; margin-bottom: 2rem;">
+      <a href="contact.html" class="btn btn-primary" style="width: 100%;">Request Consultation</a>
+    </div>
+  </div>
+
+<section style="background-color: var(--color-hero-bg); padding: 140px 0 70px 0; color: var(--color-hero-text); text-align: center; position: relative;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-hero-gradient); z-index: 1;"></div>
+    <div class="container" style="position: relative; z-index: 5;">
+      <span class="section-tag" style="color: var(--color-accent);">Service Arena</span>
+      <h1 style="font-size: 3rem; font-weight: 800; margin-top: 0.5rem; color: var(--color-hero-text); letter-spacing: -0.02em;">Corporate Staffing & Sourcing Portfolio</h1>
+      <p style="font-size: 1.125rem; color: var(--color-hero-subtext); max-width: 800px; margin: 1.25rem auto 0 auto; line-height: 1.6;">
+        Explore our complete suite of global recruitment, staff augmentation, advisory services, and operational compliance structures.
+      </p>
+    </div>
+  </section>
+
+  <!-- --- SERVICES DIRECTORY (RPO Arena Structure) --- -->
+  <section class="poppins-override" style="background-color: var(--color-white); padding: var(--section-padding);">
+    <div class="container">
+      <div class="row" style="display: flex; flex-wrap: wrap;">
+        
+        <!-- Sidebar Navigation -->
+        <div class="col-12 col-md-3" style="width: 25%;">
+          <div class="glass-panel" style="padding: 1.5rem; background-color: var(--color-grey-light); border-color: var(--color-border); position: sticky; top: 110px;">
+            <h4 style="font-size: 1rem; font-weight: 800; text-transform: uppercase; color: var(--color-bg-dark); margin-bottom: 1.25rem; letter-spacing: 0.05em;">Our Services</h4>
+            <ul style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem; font-weight: 600; color: var(--color-grey-dark);">
+              <li><a href="#rpo" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">1. RPO Solutions</a></li>
+              <li><a href="#offshore" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">2. Offshore Recruitment</a></li>
+              <li><a href="#executive" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">3. Executive Search</a></li>
+              <li><a href="#permanent" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">4. Permanent Staffing</a></li>
+              <li><a href="#contract" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">5. Contract Staffing</a></li>
+              <li><a href="#talent-acq" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">6. Talent Consulting</a></li>
+              <li><a href="#workforce" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">7. Workforce Planning</a></li>
+              <li><a href="#recruitment-technology" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">8. Recruitment Tech</a></li>
+              <li><a href="#global-hiring" style="display: block; padding: 0.5rem; border-radius: var(--radius-sm); transition: all 0.3s;" class="service-nav-link">9. Global Hiring</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Master Content Column -->
+        <div class="col-12 col-md-9" style="width: 75%; padding-left: 3rem;">
+          
+          <!-- Section 1: RPO -->
+          <div id="rpo" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Managed Sourcing Platform</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">1. Recruitment Process Outsourcing (RPO)</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Dexton Solvexx provides enterprise-grade Recruitment Process Outsourcing (RPO) solutions designed to manage your entire end-to-end recruitment lifecycle. Rather than acting as a transactional external staffing agency, we integrate deep into your internal HR ecosystems. We deploy dedicated recruiting infrastructure, modern applicant tracking tools, and experienced sourcing specialists to optimize key metrics. From initial requirement drafting and target marketing to deep vetting assessments, structured interview scheduling, and global payroll compliance setups, we assume complete ownership of the hiring pipeline.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Strategic Sourcing & Vetting Capabilities:</h4>
+            <ul class="check-list">
+              <li>Dedicated senior recruitment specialists aligned to your exact hours and timezone.</li>
+              <li>Continuous target market mapping and pipeline generation for hard-to-fill and niche technical slots.</li>
+              <li>Advanced ATS configuration, automated resumes vetting, and digital screening workflows.</li>
+              <li>Rigorous compliance shielding covering GDPR regulations, data transfers, and global IP protection.</li>
+              <li>Predictable, cost-effective hiring models backed by structured Service Level Agreements (SLAs).</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="rpo-services.html" class="btn btn-primary btn-shimmer">RPO Subpage Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 2: Offshore -->
+          <div id="offshore" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Remote Hub Capacity</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">2. Offshore Recruitment Services</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Build dedicated, high-performance offshore divisions in premier global talent corridors. Our specialized teams connect Western enterprises with exceptional, pre-vetted professionals in APAC, Eastern Europe, and LATAM. We handle the friction of global sourcing: navigating timezone variations, language vetting, cross-border payments, and localized benefits processing. Your offshore remote staff operate on your exact hours, utilizing secure, client-managed sandboxes to deliver premium outputs in software architecture, accounting systems, drafting, or business support.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Offshore Operations Blueprint:</h4>
+            <ul class="check-list">
+              <li>24/7 global talent sourcing network covering tech corridors in India, Singapore, and Europe.</li>
+              <li>Employer of Record (EOR) billing infrastructure allowing easy invoicing in major global currencies.</li>
+              <li>Dedicated local HR managers on the ground to drive high candidate retention (95%+).</li>
+              <li>Vetted remote staffing setups with localized labor compliance and data safeguards.</li>
+              <li>Custom secure physical workspaces equipped to meet strict enterprise data protection rules.</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="offshore-recruitment.html" class="btn btn-primary btn-shimmer">Offshore Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 3: Executive Search -->
+          <div id="executive" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Leadership Acquisition</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">3. Executive Search & Leadership Capture</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Securing high-performing leadership talent is a highly delicate operation that demands absolute confidentiality, deep market coverage, and sophisticated direct outreach. Dexton Solvexx's Executive Search division targets active directors, CEOs, technology heads, and strategic leaders. We don't rely on basic postings; instead, we deploy discreet direct networking strategies, comprehensive industry mappings, and complete references verification. We help you fill critical management gaps with leaders who possess a proven track record of steering cross-border corporate growth.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Leadership Hunting Process:</h4>
+            <ul class="check-list">
+              <li>100% confidential research, candidate tracking, and discreet target outreach campaigns.</li>
+              <li>Deep industry vertical mapping to target high-performing leaders at direct competitors.</li>
+              <li>Multi-layered executive vetting, technical audits, and peer references validation.</li>
+              <li>Strict 180-day executive placement transition protection guarantee.</li>
+              <li>Complete board-level onboarding support to align new directors immediately.</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="executive-search.html" class="btn btn-primary btn-shimmer">Executive Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 4: Permanent -->
+          <div id="permanent" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Strategic Core Growth</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">4. Permanent Staffing Solutions</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Build a solid base for long-term growth with our Permanent Staffing Solutions. Dexton Solvexx sources, screens, and places full-time professionals directly into your corporate hierarchy. We take the time to deeply understand your organizational culture, operating expectations, and core skill requirements. Our extensive vetting process filters out weak candidates, ensuring we present only top-tier professionals who are ready to drive performance and deliver immediate business value.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Direct Hire Core Vetting:</h4>
+            <ul class="check-list">
+              <li>Extensive candidate sourcing, technical testing, and deep cultural fit profiling.</li>
+              <li>Strict candidate submittal-to-interview standards: average 3:1 ratio.</li>
+              <li>Rigorous reference checks, career validation, and employment verification.</li>
+              <li>Solid 90-day structural replacement placement guarantee.</li>
+              <li>Complete integration support to ensure smooth new hire onboarding.</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="permanent-staffing.html" class="btn btn-primary btn-shimmer">Permanent Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 5: Contract -->
+          <div id="contract" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Agile Operational Scale</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">5. Contract Staffing</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Adapt quickly to changing commercial demands with our flexible Contract Staffing solutions. Dexton Solvexx provides vetted professionals for project-specific needs, peak operational seasons, or coverage leaves. We maintain an active, qualified bench of remote experts in areas like IT, customer success, finance, and logistics. Our models allow you to scale team sizes up or down dynamically, keeping your business agile and operational costs optimized.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Contract Staffing Benefits:</h4>
+            <ul class="check-list">
+              <li>Rapid team scaling in under 48 hours for standard IT, support, and admin roles.</li>
+              <li>Fully managed compliance, timesheet processing, and payroll support.</li>
+              <li>Highly qualified bench of pre-vetted specialists in technology, bookkeeping, and operations.</li>
+              <li>Straightforward extensions, transition plans, and flexible engagement terms.</li>
+              <li>Complete EOR labor shielding protecting clients from remote employee liability.</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="contract-staffing.html" class="btn btn-primary btn-shimmer">Contract Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 6: Talent Consulting -->
+          <div id="talent-acq" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Advisory Capabilities</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">6. Talent Acquisition Consulting</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Optimize your internal hiring structures with our expert advisory services. Dexton Solvexx conducts deep diagnostic reviews of your hiring processes, candidate experience paths, Employer Value Proposition (EVP) designs, and onboarding systems. We introduce data-driven improvements that reduce sourcing waste, streamline vetting pipelines, and drive talent retention, ensuring your business stays competitive in the global market.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Strategic Consulting Scope:</h4>
+            <ul class="check-list">
+              <li>Hiring pipeline diagnostic audits and data-driven waste reduction models.</li>
+              <li>Employer Value Proposition (EVP) optimization and talent branding audits.</li>
+              <li>Modern ATS, HRIS, and recruitment automation tool assessments.</li>
+              <li>Structured interviewer training and unified evaluation rubrics.</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="talent-acquisition.html" class="btn btn-primary btn-shimmer">Consulting Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 7: Workforce Planning -->
+          <div id="workforce" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Strategic Diagnostics</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">7. Workforce Planning</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Align your talent strategy directly with your long-term business goals. We design detailed workforce planning frameworks, map key operational roles, evaluate internal competencies, and structure clear succession paths. By looking ahead, we help you prepare for technology transitions and expansion programs, ensuring your team has the skills needed to succeed.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Planning Deliverables:</h4>
+            <ul class="check-list">
+              <li>Detailed talent capability mapping matched to strategic corporate milestones.</li>
+              <li>Competency diagnostics identifying critical talent vulnerabilities and gaps.</li>
+              <li>Structured corporate succession planning templates and transition designs.</li>
+              <li>Dynamic capacity modeling tools that predict future hiring demands.</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="workforce-planning.html" class="btn btn-primary btn-shimmer">Planning Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 8: Tech Solutions -->
+          <div id="recruitment-technology" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Automation Systems</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">8. Recruitment Technology Solutions</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Bring advanced automation and efficiency into your hiring pipelines. Dexton Solvexx integrates custom ATS platforms, automated screening systems, and secure coding evaluation sandboxes. By leveraging modern hiring technology, we reduce manual administrative burdens, eliminate bias, and significantly accelerate your sourcing speed.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Recruitment Tech Stack Features:</h4>
+            <ul class="check-list">
+              <li>Custom ATS setups linked to robust global talent databases.</li>
+              <li>Automated resumes parsing and machine screening algorithms.</li>
+              <li>Integrated skills evaluation sandboxes (coding tests, financial modeling).</li>
+              <li>Unified visual analytics dashboards tracking pipeline speed and time-to-hire.</li>
+            </ul>
+            <div class="service-cta-group">
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+            <hr style="margin-top: 3rem; border: 0; border-top: 1px solid var(--color-border);">
+          </div>
+
+          <!-- Section 9: Global Sourcing -->
+          <div id="global-hiring" class="reveal-up" style="margin-bottom: 5.5rem; scroll-margin-top: 110px;">
+            <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em;">Cross-Border Operations</span>
+            <h2 style="font-size: 2rem; font-weight: 800; color: var(--color-primary); margin-top: 0.25rem; margin-bottom: 1.25rem;">9. Global Hiring Solutions</h2>
+            <p style="color: var(--color-grey-dark); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+              Scale smoothly in new international markets without the complexity of setting up local corporate entities. Dexton Solvexx provides comprehensive global hiring frameworks, Employer of Record (EOR) options, and cross-border payroll administration. We take complete ownership of localized labor laws, benefits, and tax compliance, protecting your business from international liability.
+            </p>
+            <h4 style="font-weight: 700; color: var(--color-bg-dark); margin-bottom: 0.5rem;">Cross-Border Compliance Safeguards:</h4>
+            <ul class="check-list">
+              <li>Comprehensive EOR support covering recruitment, onboarding, and payroll.</li>
+              <li>Localized labor compliance shielding covering GDPR, tax rules, and local regulations.</li>
+              <li>Simplified monthly cross-border invoicing in local and international currencies.</li>
+              <li>Comprehensive international benefits management (insurance, pensions, local perks).</li>
+            </ul>
+            <div class="service-cta-group">
+              <a href="global-hiring.html" class="btn btn-primary btn-shimmer">Global Hiring Details &rarr;</a>
+              <button class="btn btn-dark trigger-compliance-modal">🛡️ Free Compliance Audit</button>
+              <button class="btn btn-accent trigger-call-modal">📞 Book 15-Min Call</button>
+            </div>
+          </div>
+
+          <!-- --- Interactive Transformation Intake Form Banner (RPO Arena "Journey" Form) --- -->
+          <div class="transformation-banner reveal-up" style="scroll-margin-top: 110px;">
+            <h2>Begin Your Journey of Transformation</h2>
+            <p>Unleash the power of streamlined back-office & RPO solutions for transformative business growth. Submit your contact details below, and an executive compliance director will build a custom strategy for your firm.</p>
+            <form class="transformation-form" id="transformation-intake-form">
+              <div class="form-group">
+                <input type="text" id="trans-name" required placeholder="Enter Name*">
+              </div>
+              <div class="form-group">
+                <input type="tel" id="trans-phone" required placeholder="Mobile Number*">
+              </div>
+              <div class="form-group">
+                <input type="email" id="trans-email" required placeholder="Email Address*">
+              </div>
+              <div style="grid-column: span 3; margin-top: 1.5rem; text-align: center;">
+                <button type="submit" class="btn btn-submit btn-shimmer" style="max-width: 320px;">Get In Touch Now</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- SITE FOOTER --- -->
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="row" style="display: flex; flex-wrap: wrap; width: 100%;">
+        <div class="col-12 col-md-3" style="width: 30%;">
+          <div class="footer-logo-desc">
+            <a href="index.html" class="logo-link">
+              <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 44px; height: 44px;" role="img" aria-label="Dexton Solvexx Logo">
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="var(--color-accent)" />
+                <stop offset="100%" stop-color="var(--color-primary)" />
+              </linearGradient>
+              <linearGradient id="logoGradGold" x1="0" y1="100" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#E5E7EB" />
+                <stop offset="50%" stop-color="#FFFFFF" />
+                <stop offset="100%" stop-color="#9CA3AF" />
+              </linearGradient>
+              <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <!-- 3D Bevel Arrowhead Symbol -->
+            <!-- Left Wing (D) -->
+            <path d="M 27 15 L 77 32 L 43 35 L 27 54 L 38 35 Z" fill="url(#logoGrad)" filter="url(#logoGlow)" />
+            <path d="M 27 15 L 43 35 L 27 54 L 33 50 L 45 35 L 33 19 Z" fill="url(#logoGradGold)" />
+            
+            <!-- Right Wing (S Ribbon) -->
+            <path d="M 43 35 L 77 32 L 62 45 L 48 40 Z" fill="url(#logoGradGold)" />
+            <path d="M 48 40 L 62 45 L 52 49 L 40 44 Z" fill="url(#logoGrad)" /></svg>
+              <div class="logo-text">DEXTON <span>SOLVEXX</span></div>
+            </a>
+            <div class="tagline" style="margin-top: 10px;">Your Strategic Offshore Recruitment Partner.</div>
+            <p class="footer-desc">Dexton Solvexx is a premier global recruitment process outsourcing and offshore staffing firm. We help enterprise businesses scale by connecting them with vetted top-tier global talent.</p>
+            <div class="social-icons">
+              <a href="#" class="social-icon linkedin" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+              <a href="#" class="social-icon facebook" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1V12h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+              </a>
+              <a href="#" class="social-icon instagram" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.79 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <a href="#" class="social-icon twitter" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-2" style="width: 20%; padding-left: 2rem;">
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="industries.html">Industries</a></li>
+            <li><a href="blog.html">Latest Blog</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-3" style="width: 25%;">
+          <h4 class="footer-col-title">Key Services</h4>
+          <ul class="footer-links">
+            <li><a href="offshore-recruitment.html">Offshore Sourcing</a></li>
+            <li><a href="executive-search.html">Executive Search</a></li>
+            <li><a href="rpo-services.html">RPO Services</a></li>
+            <li><a href="permanent-staffing.html">Permanent Staffing</a></li>
+            <li><a href="contract-staffing.html">Contract Staffing</a></li>
+            <li><a href="global-hiring.html">Global Hiring Solutions</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-4" style="width: 25%;">
+          <h4 class="footer-col-title">Contact Us</h4>
+          <ul class="footer-contact">
+            <li>
+              <svg viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+              <span>+1 (800) 555-DEXTON<br>+44 (20) 7946-0925</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+              <span>solutions@dextonsolvexx.com<br>info@dextonsolvexx.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-divider-container">
+      <div class="footer-divider"></div>
+    </div>
+    
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 Dexton Solvexx. All Rights Reserved. Legally Registered Global Entity.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="terms-and-conditions.html">Terms & Conditions</a>
+          <a href="sitemap.html">Sitemap</a>
+          <a href="admin.html" style="opacity: 0.85;">Admin Console</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- INTERACTIVE OVERLAY POPUPS (RPO Arena System) --- -->
+
+  <!-- Popup 1656 – FREE COMPLIANCE HEALTH CHECK -->
+  <div id="pum-1656" class="custom-pum-overlay">
+    <div class="pum-container poppins-override">
+      <button class="pum-close" aria-label="Close Modal">&times;</button>
+      <h2>Free Compliance Health Check</h2>
+      <p class="modal-subtitle">Identify where compliance is slipping in your global recruitment operations and get an audit-ready plan to protect your organization.</p>
+      <form class="pum-form" id="compliance-health-form">
+        <div class="form-group">
+          <label for="comp-name">Full Name *</label>
+          <input type="text" id="comp-name" required placeholder="e.g. Sarah Jenkins">
+        </div>
+        <div class="form-group">
+          <label for="comp-email">Business Email *</label>
+          <input type="email" id="comp-email" required placeholder="e.g. sarah@company.com">
+        </div>
+        <div class="form-group">
+          <label for="comp-phone">Mobile Number *</label>
+          <input type="tel" id="comp-phone" required placeholder="e.g. +1 (555) 019-2834">
+        </div>
+        <div class="form-group">
+          <label>Select Services of Interest *</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" name="comp-service" value="Managed RPO"> Managed RPO</label>
+            <label class="checkbox-item"><input type="checkbox" name="comp-service" value="Offshore Staffing"> Offshore Staffing</label>
+            <label class="checkbox-item"><input type="checkbox" name="comp-service" value="Executive Search"> Executive Search</label>
+            <label class="checkbox-item"><input type="checkbox" name="comp-service" value="Permanent Hiring"> Permanent Hiring</label>
+            <label class="checkbox-item"><input type="checkbox" name="comp-service" value="Contract Staffing"> Contract Staffing</label>
+            <label class="checkbox-item"><input type="checkbox" name="comp-service" value="Talent Advisory"> Talent Advisory</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-submit">Request Free Health Check &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Popup 1658 – QUICK COMPLIANCE CALL (15 MIN) -->
+  <div id="pum-1658" class="custom-pum-overlay">
+    <div class="pum-container poppins-override">
+      <button class="pum-close" aria-label="Close Modal">&times;</button>
+      <h2>Book a 15-Min Strategic Call</h2>
+      <p class="modal-subtitle">Connect with a senior Dexton Solvexx recruitment compliance director to discuss your staffing goals and scaling blockers.</p>
+      
+      <div style="text-align: left; margin-bottom: 1.5rem;">
+        <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--color-primary);">What We'll Accomplish:</h4>
+        <ul style="padding-left: 1.25rem; font-size: 0.85rem; color: var(--color-grey); list-style-type: disc; display: flex; flex-direction: column; gap: 0.35rem;">
+          <li>Review your current sourcing speed and cost-per-hire challenges.</li>
+          <li>Identify critical compliance slips in cross-border payroll/tax.</li>
+          <li>Map a customized, scalable co-sourcing blueprint tailored to your exact tech needs.</li>
+        </ul>
+      </div>
+
+      <!-- Interactive Calendly Picker Widget Mockup -->
+      <div class="calendly-mockup">
+        <div class="calendly-header">
+          <span>📅 Select Date & Time (in UTC+5:30)</span>
+          <span style="color: var(--color-accent); font-weight: 700;">Dexton Solvexx Calendar</span>
+        </div>
+        <div class="calendar-grid" id="calendly-grid">
+          <!-- Calendar Days Header -->
+          <span class="calendar-day-header">Su</span>
+          <span class="calendar-day-header">Mo</span>
+          <span class="calendar-day-header">Tu</span>
+          <span class="calendar-day-header">We</span>
+          <span class="calendar-day-header">Th</span>
+          <span class="calendar-day-header">Fr</span>
+          <span class="calendar-day-header">Sa</span>
+          
+          <!-- Mock Calendar Month (June 2026) -->
+          <span class="calendar-day empty"></span>
+          <span class="calendar-day empty"></span>
+          <span class="calendar-day" data-day="2">2</span>
+          <span class="calendar-day" data-day="3">3</span>
+          <span class="calendar-day" data-day="4">4</span>
+          <span class="calendar-day" data-day="5">5</span>
+          <span class="calendar-day" data-day="6">6</span>
+          <span class="calendar-day" data-day="7">7</span>
+          <span class="calendar-day" data-day="8">8</span>
+          <span class="calendar-day" data-day="9">9</span>
+          <span class="calendar-day" data-day="10">10</span>
+          <span class="calendar-day" data-day="11">11</span>
+          <span class="calendar-day" data-day="12">12</span>
+          <span class="calendar-day" data-day="13">13</span>
+          <span class="calendar-day" data-day="14">14</span>
+          <span class="calendar-day" data-day="15">15</span>
+          <span class="calendar-day" data-day="16">16</span>
+          <span class="calendar-day" data-day="17">17</span>
+          <span class="calendar-day" data-day="18">18</span>
+          <span class="calendar-day" data-day="19">19</span>
+          <span class="calendar-day" data-day="20">20</span>
+          <span class="calendar-day" data-day="21">21</span>
+          <span class="calendar-day" data-day="22">22</span>
+          <span class="calendar-day" data-day="23">23</span>
+          <span class="calendar-day" data-day="24">24</span>
+          <span class="calendar-day" data-day="25">25</span>
+          <span class="calendar-day" data-day="26">26</span>
+          <span class="calendar-day" data-day="27">27</span>
+          <span class="calendar-day" data-day="28">28</span>
+          <span class="calendar-day" data-day="29">29</span>
+          <span class="calendar-day" data-day="30">30</span>
+        </div>
+        
+        <div class="time-slots-container" id="calendly-slots-container">
+          <div class="time-slots-title" id="selected-day-label">Selected Date: June 15, 2026</div>
+          <div class="time-slots">
+            <span class="time-slot" data-time="09:00 AM">09:00 AM</span>
+            <span class="time-slot" data-time="11:30 AM">11:30 AM</span>
+            <span class="time-slot" data-time="02:00 PM">02:00 PM</span>
+            <span class="time-slot" data-time="04:30 PM">04:30 PM</span>
+            <span class="time-slot" data-time="06:00 PM">06:00 PM</span>
+            <span class="time-slot" data-time="08:30 PM">08:30 PM</span>
+          </div>
+        </div>
+        
+        <button class="calendar-confirm-btn" id="confirm-call-btn">Confirm Sourcing Consultation 📞</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup 1697 – THANK YOU MODAL -->
+  <div id="pum-1697" class="custom-pum-overlay">
+    <div class="pum-container poppins-override">
+      <button class="pum-close" aria-label="Close Modal">&times;</button>
+      <div class="thank-you-box">
+        <div class="icon-success">✓</div>
+        <h2>Done — we’ve got it!</h2>
+        <h3>Your Compliance Intake Has Been Registered</h3>
+        <p class="modal-subtitle" style="margin-bottom: 1.5rem;">We will review your organizational metrics and compile a custom report covering:</p>
+        <ul>
+          <li>Where compliance is most likely slipping in your current recruitment pipelines.</li>
+          <li>What requires immediate structural tightening.</li>
+          <li>A simple roadmap to maintain a secure, audit-ready global workforce database.</li>
+        </ul>
+        
+        <div style="background-color: var(--color-grey-light); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); margin-bottom: 1.5rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--color-primary);">Speed Up the Process:</h4>
+          <button class="btn btn-call-recommended" id="pum-trigger-call-recommended">📞 Book a 15-min call now (recommended)</button>
+          <p style="font-size: 0.8rem; color: var(--color-grey); margin-bottom: 0;">Or a compliance expert will reach out to you within 24 business hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vector Ring Gradients definitions (Shared SVG resources) -->
+  <svg style="width:0; height:0; position:absolute;">
+    <defs>
+      <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--color-accent)" />
+        <stop offset="100%" stop-color="var(--color-primary)" />
+      </linearGradient>
+      <radialGradient id="globeGrad" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
+        <stop offset="0%" stop-color="var(--color-primary)" />
+        <stop offset="70%" stop-color="#1E3A8A" />
+        <stop offset="100%" stop-color="#0A3C38" />
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <a href="#" class="back-to-top" aria-label="Back to Top">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" stroke="currentColor" stroke-width="1.5"/></svg>
+  </a>
+
+  <!-- Global scripts -->
+  <script src="js/menu.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Interactive Popups / Intake Form JavaScript Bindings -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Modal Overlays
+        const complianceOverlay = document.getElementById('pum-1656');
+        const callOverlay = document.getElementById('pum-1658');
+        const thankOverlay = document.getElementById('pum-1697');
+        
+        // Triggers
+        const triggerComplianceButtons = document.querySelectorAll('.trigger-compliance-modal');
+        const triggerCallButtons = document.querySelectorAll('.trigger-call-modal');
+        const closeButtons = document.querySelectorAll('.pum-close');
+        const overlays = document.querySelectorAll('.custom-pum-overlay');
+        
+        // Forms
+        const complianceForm = document.getElementById('compliance-health-form');
+        const intakeForm = document.getElementById('transformation-intake-form');
+        
+        // Calendly Mockup Sourcing Widget Logic
+        const days = document.querySelectorAll('.calendar-day:not(.empty)');
+        const slotsContainer = document.getElementById('calendly-slots-container');
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const selectedDayLabel = document.getElementById('selected-day-label');
+        const confirmCallBtn = document.getElementById('confirm-call-btn');
+        const recommendedCallBtn = document.getElementById('pum-trigger-call-recommended');
+        
+        let selectedDay = "";
+        let selectedTime = "";
+
+        // Open Compliance Modal
+        triggerComplianceButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                complianceOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Open Call Modal
+        triggerCallButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                callOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close Modals
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                overlays.forEach(overlay => overlay.classList.remove('active'));
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Close Modal on Overlay Backdrop Click
+        overlays.forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Handle Forms
+        if (complianceForm) {
+            complianceForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Save lead details to localStorage
+                try {
+                    const selectedServices = [];
+                    complianceForm.querySelectorAll('input[name="comp-service"]:checked').forEach(cb => {
+                        selectedServices.push(cb.value);
+                    });
+                    const leadData = {
+                        id: Date.now(),
+                        date: new Date().toLocaleString(),
+                        name: document.getElementById('comp-name')?.value || '',
+                        email: document.getElementById('comp-email')?.value || '',
+                        phone: document.getElementById('comp-phone')?.value || '',
+                        company: 'Compliance Health Check Request',
+                        service: selectedServices.join(', ') || 'Compliance Check',
+                        message: 'Requested a free compliance health check audit.'
+                    };
+                    let leads = JSON.parse(localStorage.getItem('dexton_leads') || '[]');
+                    leads.push(leadData);
+                    localStorage.setItem('dexton_leads', JSON.stringify(leads));
+                } catch (err) {
+                    console.error("Error saving compliance lead:", err);
+                }
+
+                complianceOverlay.classList.remove('active');
+                thankOverlay.classList.add('active');
+                complianceForm.reset();
+            });
+        }
+
+        if (intakeForm) {
+            intakeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Save lead details to localStorage
+                try {
+                    const leadData = {
+                        id: Date.now(),
+                        date: new Date().toLocaleString(),
+                        name: document.getElementById('trans-name')?.value || '',
+                        email: document.getElementById('trans-email')?.value || '',
+                        phone: document.getElementById('trans-phone')?.value || '',
+                        company: 'Transformation Intake Request',
+                        service: 'Managed RPO & Back-office Staffing',
+                        message: 'Submitted details on the RPO transformation banner.'
+                    };
+                    let leads = JSON.parse(localStorage.getItem('dexton_leads') || '[]');
+                    leads.push(leadData);
+                    localStorage.setItem('dexton_leads', JSON.stringify(leads));
+                } catch (err) {
+                    console.error("Error saving intake lead:", err);
+                }
+
+                thankOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                intakeForm.reset();
+            });
+        }
+
+        // Thank You Modal - Quick call trigger
+        if (recommendedCallBtn) {
+            recommendedCallBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                thankOverlay.classList.remove('active');
+                callOverlay.classList.add('active');
+            });
+        }
+
+        // Calendly Sourcing Picker interactive actions
+        days.forEach(day => {
+            day.addEventListener('click', () => {
+                days.forEach(d => d.classList.remove('active'));
+                day.classList.add('active');
+                selectedDay = day.getAttribute('data-day');
+                
+                selectedDayLabel.textContent = `Selected Date: June ${selectedDay}, 2026`;
+                slotsContainer.classList.add('active');
+                
+                // Reset time and confirm state
+                confirmCallBtn.classList.remove('active');
+                timeSlots.forEach(t => t.classList.remove('selected'));
+            });
+        });
+
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                timeSlots.forEach(t => t.classList.remove('selected'));
+                slot.classList.add('selected');
+                selectedTime = slot.getAttribute('data-time');
+                confirmCallBtn.classList.add('active');
+            });
+        });
+
+        if (confirmCallBtn) {
+            confirmCallBtn.addEventListener('click', () => {
+                alert(`Appointment Confirmed!\nYour 15-Minute Strategic Call has been scheduled for June ${selectedDay}, 2026 at ${selectedTime}.\n\nA confirmation link and calendar invitation have been sent to your email address.`);
+                callOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // reset states
+                days.forEach(d => d.classList.remove('active'));
+                slotsContainer.classList.remove('active');
+                confirmCallBtn.classList.remove('active');
+            });
+        }
+
+        // Simple smooth scroll indicator check for Sidebar Navigation
+        const sections = document.querySelectorAll('.reveal-up[id]');
+        const navLinks = document.querySelectorAll('.service-nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                link.style.color = '';
+                link.style.paddingLeft = '';
+                link.style.borderLeft = '';
+                
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                    link.style.color = 'var(--color-primary)';
+                    link.style.paddingLeft = '0.75rem';
+                    link.style.borderLeft = '3px solid var(--color-accent)';
+                }
+            });
+        });
+    });
+  </script>
+</body>
+</html>
